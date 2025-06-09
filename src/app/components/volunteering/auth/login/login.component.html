@@ -1,0 +1,196 @@
+<div class="login-container">
+  <!-- Animated Background Elements -->
+  <div class="background-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+  </div>
+
+  <div class="login-card">
+    <!-- Left Side - Login Form -->
+    <div class="login-form-container">
+      <!-- Logo Section -->
+      <div class="logo-container">
+        <div class="logo-wrapper">
+          <img src="assets/logo1.png" alt="Swayamsevak Logo" class="logo" />
+          <div class="logo-glow"></div>
+        </div>
+        <h2 class="organization-name">SWAYAMSEVAK</h2>
+        <p class="organization-tagline">VOLUNTEER PLATFORM</p>
+      </div>
+
+      <!-- Welcome Section -->
+      <div class="welcome-section">
+        <h1 class="login-title">Welcome Back!</h1>
+        <p class="login-subtitle">
+          Sign in to continue your journey of making a difference
+        </p>
+      </div>
+
+      <!-- Sign Up Prompt -->
+      <p class="signup-prompt">
+        New to our community?
+        <a class="signup-link" routerLink="/signup">
+          <span>Create Account</span>
+          <i class="pi pi-arrow-right"></i>
+        </a>
+      </p>
+
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="form-field">
+          <label for="email">
+            <i class="pi pi-envelope"></i>
+            Email Address
+          </label>
+          <div class="input-wrapper">
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              placeholder="Enter your email address"
+              class="form-input"
+            />
+            <div class="input-border"></div>
+          </div>
+          <small
+            *ngIf="
+              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+            "
+            class="error-message"
+          >
+            <i class="pi pi-exclamation-circle"></i>
+            Please enter a valid email address
+          </small>
+        </div>
+
+        <div class="form-field">
+          <label for="password">
+            <i class="pi pi-lock"></i>
+            Password
+          </label>
+          <div class="input-wrapper">
+            <input
+              id="password"
+              type="password"
+              pInputText
+              formControlName="password"
+              placeholder="Enter your password"
+              class="form-input"
+            />
+            <div class="input-border"></div>
+          </div>
+          <small
+            *ngIf="
+              loginForm.get('password')?.invalid &&
+              loginForm.get('password')?.touched
+            "
+            class="error-message"
+          >
+            <i class="pi pi-exclamation-circle"></i>
+            Password must be at least 6 characters
+          </small>
+        </div>
+
+        <!-- Forgot Password Link -->
+        <div class="forgot-password">
+          <a href="#" class="forgot-link">Forgot your password?</a>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-container">
+          <button
+            pButton
+            type="submit"
+            class="login-button"
+            [disabled]="loginForm.invalid"
+          >
+            <span class="button-content">
+              <i class="pi pi-sign-in"></i>
+              <span>Sign In</span>
+            </span>
+            <div class="button-ripple"></div>
+          </button>
+
+          <button pButton type="button" class="back-button" (click)="goBack()">
+            <span class="button-content">
+              <i class="pi pi-arrow-left"></i>
+              <span>Back to Home</span>
+            </span>
+          </button>
+        </div>
+      </form>
+
+      <div
+        *ngIf="apiError"
+        class="error-message"
+        style="text-align: center; margin-top: 1rem"
+      >
+        {{ apiError }}
+      </div>
+
+      <!-- Social Login Section -->
+      <div class="social-login">
+        <div class="divider">
+          <span>or continue with</span>
+        </div>
+        <div class="social-buttons">
+          <button type="button" class="social-btn google-btn">
+            <i class="pi pi-google"></i>
+          </button>
+          <button type="button" class="social-btn facebook-btn">
+            <i class="pi pi-facebook"></i>
+          </button>
+          <button type="button" class="social-btn twitter-btn">
+            <i class="pi pi-twitter"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Illustration -->
+    <div class="welcome-illustration">
+      <div class="illustration-content">
+        <div class="volunteer-icons">
+          <div class="icon-float icon-1">
+            <i class="pi pi-users"></i>
+          </div>
+          <div class="icon-float icon-2">
+            <i class="pi pi-heart"></i>
+          </div>
+          <div class="icon-float icon-3">
+            <i class="pi pi-globe"></i>
+          </div>
+          <div class="icon-float icon-4">
+            <i class="pi pi-star"></i>
+          </div>
+        </div>
+
+        <div class="illustration-text">
+          <h3>Join Our Community</h3>
+          <p>
+            Connect with passionate volunteers and make a meaningful impact in
+            your community.
+          </p>
+
+          <div class="stats-preview">
+            <div class="stat-item">
+              <div class="stat-number">2,500+</div>
+              <div class="stat-label">Volunteers</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">450+</div>
+              <div class="stat-label">Events</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">15K+</div>
+              <div class="stat-label">Lives Impacted</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="city-events-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-arrow-left"
+      class="p-button-text back-button"
+      (click)="goBack()"
+    ></button>
+    <div class="header-content">
+      <h1 class="page-title">Events in {{ cityName | titlecase }}</h1>
+      <p class="page-subtitle">Discover volunteer opportunities in your city</p>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <i class="pi pi-spin pi-spinner loading-icon"></i>
+    <p>Loading events...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !loading">
+    <i class="pi pi-exclamation-triangle error-icon"></i>
+    <h3>Oops! Something went wrong</h3>
+    <p>{{ error }}</p>
+    <button
+      pButton
+      type="button"
+      label="Try Again"
+      icon="pi pi-refresh"
+      class="retry-button"
+      (click)="loadEventsByCity()"
+    ></button>
+  </div>
+
+  <!-- No Events Found -->
+  <div class="no-events-container" *ngIf="noEventsFound && !loading && !error">
+    <i class="pi pi-calendar-times no-events-icon"></i>
+    <h3>No Events Found</h3>
+    <p>
+      There are currently no volunteer events in {{ cityName | titlecase }}.
+    </p>
+    <p>Be the first to organize an event in your city!</p>
+    <button
+      pButton
+      type="button"
+      label="Organize Event"
+      icon="pi pi-plus"
+      class="organize-button"
+    ></button>
+  </div>
+
+  <!-- Events List -->
+  <div class="events-grid" *ngIf="events.length > 0 && !loading && !error">
+    <div class="event-card" *ngFor="let event of events">
+      <div class="event-header">
+        <div class="event-date">
+          <i class="pi pi-calendar"></i>
+          <span>{{ formatDate(event.eventDate) }}</span>
+        </div>
+        <div class="event-time">
+          <i class="pi pi-clock"></i>
+          <!-- <span>{{ formatTime(event.eventTime) }}</span> -->
+          <span>{{ event.eventTime }}</span>
+        </div>
+      </div>
+
+      <div class="event-content">
+        <h3 class="event-title">Volunteer Opportunity</h3>
+        <p class="event-description">{{ event.eventDes }}</p>
+
+        <div class="event-details">
+          <div class="detail-item">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ event.address }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="pi pi-user"></i>
+            <span>Organized by {{ event.organizerName }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="pi pi-phone"></i>
+            <span>{{ event.contact }}</span>
+          </div>
+        </div>
+
+        <div class="volunteer-info">
+          <div class="volunteer-count">
+            <span class="joined">{{ event.noOfVolJoined }}</span>
+            <span class="separator">/</span>
+            <span class="total">{{ event.totalVol }}</span>
+            <span class="label">volunteers</span>
+          </div>
+          <div
+            class="volunteer-status"
+            [ngClass]="{ full: isEventFull(event) }"
+          >
+            {{ getVolunteerStatus(event) }}
+          </div>
+        </div>
+      </div>
+
+      <div class="event-actions">
+        <button
+          pButton
+          type="button"
+          [label]="isEventFull(event) ? 'Event Full' : 'Join Event'"
+          icon="pi pi-user-plus"
+          class="join-button"
+          [disabled]="isEventFull(event) || hasJoinedSameDay(event)"
+          (click)="joinEvent(event)"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

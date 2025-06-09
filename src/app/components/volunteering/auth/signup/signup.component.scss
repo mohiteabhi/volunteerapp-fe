@@ -1,0 +1,370 @@
+.signup-container {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.signup-card {
+  flex: 1;
+  max-width: 500px;
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  margin: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  
+  @media (max-width: 768px) {
+    margin: 10px;
+    padding: 30px 20px;
+    border-radius: 16px;
+  }
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo {
+  margin-bottom: 16px;
+  
+  .logo-img {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.brand-name {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
+  
+  .brand-swayam {
+    color: #FF6B35;
+  }
+  
+  .brand-sevak {
+    color: #8B5CF6;
+  }
+}
+
+.platform-text {
+  color: #64748B;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+
+.welcome-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #8B5CF6;
+  margin-bottom: 8px;
+}
+
+.welcome-subtitle {
+  color: #64748B;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.login-link {
+  color: #64748B;
+  font-size: 14px;
+  
+  .create-account-link {
+    color: #8B5CF6;
+    text-decoration: none;
+    font-weight: 500;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.signup-form {
+  .form-row {
+    display: flex;
+    gap: 16px;
+    
+    @media (max-width: 480px) {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    
+    &.half-width {
+      flex: 1;
+    }
+  }
+  
+  .form-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    
+    .optional {
+      color: #9CA3AF;
+      font-weight: 400;
+      font-size: 12px;
+    }
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #E5E7EB;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    background: #FAFAFA;
+    box-sizing: border-box;
+    
+    &:focus {
+      outline: none;
+      border-color: #8B5CF6;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    }
+    
+    &.error {
+      border-color: #EF4444;
+      background: #FEF2F2;
+    }
+    
+    &.textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    &::placeholder {
+      color: #9CA3AF;
+    }
+  }
+  
+  .error-message {
+    color: #EF4444;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 4px;
+  }
+}
+
+.signup-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #FF6B35 0%, #F59E0B 100%);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.back-btn {
+  width: 100%;
+  background: transparent;
+  color: #64748B;
+  border: 2px solid #E5E7EB;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  
+  &:hover {
+    background: #F8FAFC;
+    border-color: #D1D5DB;
+  }
+}
+
+.info-panel {
+  flex: 1;
+  background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  border-radius: 24px;
+  margin: 20px;
+  padding: 60px 40px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.floating-icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  
+  .floating-icon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float 6s ease-in-out infinite;
+    
+    i {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    &.icon1 {
+      top: 10%;
+      right: 15%;
+      animation-delay: 0s;
+    }
+    
+    &.icon2 {
+      top: 30%;
+      right: 30%;
+      animation-delay: 1.5s;
+    }
+    
+    &.icon3 {
+      bottom: 30%;
+      right: 10%;
+      animation-delay: 3s;
+    }
+    
+    &.icon4 {
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4.5s;
+    }
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.content {
+  text-align: center;
+  z-index: 1;
+}
+
+.panel-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(45deg, #FFFFFF, #E0E7FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.panel-description {
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.quote-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  
+  .quote-text {
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.5;
+    transition: opacity 0.5s ease;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  
+  .stat-item {
+    text-align: center;
+    
+    .stat-number {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  }
+}
+
+// Icon styles (assuming you'll use a library like Feather Icons or Font Awesome)
+.icon-user,
+.icon-calendar,
+.icon-mail,
+.icon-map-pin,
+.icon-phone,
+.icon-lock,
+.icon-arrow-right,
+.icon-arrow-left,
+.icon-users,
+.icon-star,
+.icon-heart,
+.icon-globe {
+  width: 16px;
+  height: 16px;
+  
+  // If using Font Awesome, you can replace with:
+  // font-family: 'Font Awesome 5 Free';
+  // font-weight: 900;
+}
