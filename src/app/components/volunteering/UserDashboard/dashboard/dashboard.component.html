@@ -1,120 +1,191 @@
-<div class="dashboard-container">
-  <!-- Header Section -->
-  <div class="welcome-section">
-    <div class="welcome-content">
-      <h1 class="welcome-title">Welcome back, {{ userName }}!</h1>
-      <p class="welcome-subtitle">
-        Ready to make a difference? Join meaningful events in your community or organize your own social impact initiative.
-      </p>
+<div class="dashboard-wrapper">
+  <!-- Sidebar -->
+  <div class="sidebar" [class.sidebar-open]="sidebarOpen">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="pi pi-users"></i>
+        <span>VolunteerHub</span>
+      </div>
+      <button class="close-btn" (click)="toggleSidebar()">
+        <i class="pi pi-times"></i>
+      </button>
     </div>
-    <div class="hero-illustration">
-      <i class="pi pi-users hero-icon"></i>
+    
+    <nav class="sidebar-nav">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="#" class="nav-link active" (click)="navigateToHome()">
+            <i class="pi pi-home"></i>
+            <span>Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" (click)="navigateToEventsJoined()">
+            <i class="pi pi-calendar"></i>
+            <span>Events Joined</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" (click)="navigateToEventsOrganized()">
+            <i class="pi pi-calendar-plus"></i>
+            <span>Events Organized</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link" (click)="navigateToProfile()">
+            <i class="pi pi-user"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <i class="pi pi-sign-out"></i>
+        <span>Log out</span>
+      </button>
     </div>
   </div>
 
-  <!-- Main Action Cards -->
-  <div class="action-section">
-    <div class="section-header">
-      <h2>What would you like to do today?</h2>
-      <p>Choose your path to creating positive change in your community</p>
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" [class.overlay-active]="sidebarOpen" (click)="toggleSidebar()"></div>
+
+  <!-- Main Content -->
+  <div class="main-content" [class.content-shifted]="sidebarOpen">
+    <!-- Header with Hamburger -->
+    <div class="top-header">
+      <button class="hamburger-btn" (click)="toggleSidebar()">
+        <i class="pi pi-bars"></i>
+      </button>
+      <div class="header-user">
+        <span class="user-greeting">Hello, {{ userName }}!</span>
+        <div class="user-avatar">
+          <i class="pi pi-user"></i>
+        </div>
+      </div>
     </div>
 
-    <div class="action-cards">
-      <!-- Search Events Card -->
-      <div class="action-card search-card">
-        <div class="card-header">
-          <i class="pi pi-search card-icon"></i>
-          <h3>Find Events to Join</h3>
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+      <!-- Welcome Section -->
+      <div class="welcome-section">
+        <div class="welcome-content">
+          <h1 class="welcome-title">Welcome back, {{ userName }}!</h1>
+          <p class="welcome-subtitle">
+            Ready to make a difference? Join meaningful events in your community or organize your own social impact initiative.
+          </p>
         </div>
-        <p class="card-description">
-          Discover volunteer opportunities and social work events happening in your area. 
-          Connect with like-minded people and contribute to causes you care about.
-        </p>
-        
-        <div class="search-container">
-          <div class="p-inputgroup">
-            <input 
-              type="text" 
-              pInputText 
-              placeholder="Search events by location, cause, or keyword..." 
-              [(ngModel)]="searchQuery"
-              (keypress)="onKeyPress($event)"
-              class="search-input"
-            />
+        <div class="hero-illustration">
+          <i class="pi pi-users hero-icon"></i>
+        </div>
+      </div>
+
+      <!-- Main Action Cards -->
+      <div class="action-section">
+        <div class="section-header">
+          <h2>What would you like to do today?</h2>
+          <p>Choose your path to creating positive change in your community</p>
+        </div>
+
+        <div class="action-cards">
+          <!-- Search Events Card -->
+          <div class="action-card search-card">
+            <div class="card-header">
+              <i class="pi pi-search card-icon"></i>
+              <h3>Find Events to Join</h3>
+            </div>
+            <p class="card-description">
+              Discover volunteer opportunities and social work events happening in your area. 
+              Connect with like-minded people and contribute to causes you care about.
+            </p>
+            
+            <div class="search-container">
+              <div class="p-inputgroup">
+                <input 
+                  type="text" 
+                  pInputText 
+                  placeholder="Search events by location, cause, or keyword..." 
+                  [(ngModel)]="searchQuery"
+                  (keypress)="onKeyPress($event)"
+                  class="search-input"
+                />
+                <button 
+                  pButton 
+                  type="button" 
+                  icon="pi pi-search" 
+                  class="search-button"
+                  (click)="onSearchEvents()"
+                  [disabled]="!searchQuery.trim()"
+                ></button>
+              </div>
+            </div>
+
+            <div class="popular-searches">
+              <span class="popular-label">Popular searches:</span>
+              <div class="search-tags">
+                <span class="search-tag" (click)="searchQuery = 'education'; onSearchEvents()">Education</span>
+                <span class="search-tag" (click)="searchQuery = 'environment'; onSearchEvents()">Environment</span>
+                <span class="search-tag" (click)="searchQuery = 'healthcare'; onSearchEvents()">Healthcare</span>
+                <span class="search-tag" (click)="searchQuery = 'community'; onSearchEvents()">Community</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Organize Event Card -->
+          <div class="action-card organize-card">
+            <div class="card-header">
+              <i class="pi pi-plus-circle card-icon"></i>
+              <h3>Organize an Event</h3>
+            </div>
+            <p class="card-description">
+              Have an idea for a social impact event? Create and manage your own volunteer opportunity. 
+              Bring together passionate individuals to make a real difference.
+            </p>
+            
+            <div class="organize-features">
+              <div class="feature-item">
+                <i class="pi pi-check-circle"></i>
+                <span>Easy event creation</span>
+              </div>
+              <div class="feature-item">
+                <i class="pi pi-check-circle"></i>
+                <span>Volunteer management</span>
+              </div>
+              <div class="feature-item">
+                <i class="pi pi-check-circle"></i>
+                <span>Real-time coordination</span>
+              </div>
+            </div>
+
             <button 
               pButton 
               type="button" 
-              icon="pi pi-search" 
-              class="search-button"
-              (click)="onSearchEvents()"
-              [disabled]="!searchQuery.trim()"
+              label="Start Organizing" 
+              icon="pi pi-arrow-right"
+              class="organize-button"
+              (click)="onOrganizeEvent()"
             ></button>
           </div>
         </div>
+      </div>
 
-        <div class="popular-searches">
-          <span class="popular-label">Popular searches:</span>
-          <div class="search-tags">
-            <span class="search-tag" (click)="searchQuery = 'education'; onSearchEvents()">Education</span>
-            <span class="search-tag" (click)="searchQuery = 'environment'; onSearchEvents()">Environment</span>
-            <span class="search-tag" (click)="searchQuery = 'healthcare'; onSearchEvents()">Healthcare</span>
-            <span class="search-tag" (click)="searchQuery = 'community'; onSearchEvents()">Community</span>
+      <!-- Stats Section -->
+      <div class="stats-section">
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-number">2,500+</div>
+            <div class="stat-label">Active Volunteers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">450+</div>
+            <div class="stat-label">Events Organized</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">15,000+</div>
+            <div class="stat-label">Lives Impacted</div>
           </div>
         </div>
-      </div>
-
-      <!-- Organize Event Card -->
-      <div class="action-card organize-card">
-        <div class="card-header">
-          <i class="pi pi-plus-circle card-icon"></i>
-          <h3>Organize an Event</h3>
-        </div>
-        <p class="card-description">
-          Have an idea for a social impact event? Create and manage your own volunteer opportunity. 
-          Bring together passionate individuals to make a real difference.
-        </p>
-        
-        <div class="organize-features">
-          <div class="feature-item">
-            <i class="pi pi-check-circle"></i>
-            <span>Easy event creation</span>
-          </div>
-          <div class="feature-item">
-            <i class="pi pi-check-circle"></i>
-            <span>Volunteer management</span>
-          </div>
-          <div class="feature-item">
-            <i class="pi pi-check-circle"></i>
-            <span>Real-time coordination</span>
-          </div>
-        </div>
-
-        <button 
-          pButton 
-          type="button" 
-          label="Start Organizing" 
-          icon="pi pi-arrow-right"
-          class="organize-button"
-          (click)="onOrganizeEvent()"
-        ></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Stats Section -->
-  <div class="stats-section">
-    <div class="stats-container">
-      <div class="stat-item">
-        <div class="stat-number">2,500+</div>
-        <div class="stat-label">Active Volunteers</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">450+</div>
-        <div class="stat-label">Events Organized</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">15,000+</div>
-        <div class="stat-label">Lives Impacted</div>
       </div>
     </div>
   </div>

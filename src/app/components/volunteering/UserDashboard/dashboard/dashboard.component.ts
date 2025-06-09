@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,8 +12,9 @@ import { FormsModule } from '@angular/forms';
 export class DashboardComponent implements OnInit {
   searchQuery: string = '';
   userName: string = 'Volunteer'; // This should come from your auth service
+  sidebarOpen: boolean = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private auth: AuthService,) { }
 
   ngOnInit(): void {
     // Initialize component, get user data from auth service
@@ -20,7 +22,12 @@ export class DashboardComponent implements OnInit {
   }
 
   getUserName(): void {
-    
+    // Get user name from your auth service
+    // Example: this.userName = this.authService.getUserName();
+  }
+
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen;
   }
 
   onSearchEvents(): void {
@@ -39,5 +46,35 @@ export class DashboardComponent implements OnInit {
     if (event.key === 'Enter') {
       this.onSearchEvents();
     }
+  }
+
+  // Sidebar navigation methods
+  navigateToHome(): void {
+    this.router.navigate(['/dashboard']);
+    this.sidebarOpen = false;
+  }
+
+  navigateToEventsJoined(): void {
+    this.router.navigate(['/events-joined']);
+    this.sidebarOpen = false;
+  }
+
+  navigateToEventsOrganized(): void {
+    this.router.navigate(['/events-organized']);
+    this.sidebarOpen = false;
+  }
+
+  navigateToProfile(): void {
+    this.router.navigate(['/profile']);
+    this.sidebarOpen = false;
+  }
+
+  logout(): void {
+    // Implement logout logic here
+    // Example: this.authService.logout();
+    this.auth.logout();
+    console.log('Logging out...');
+    this.router.navigate(['/login']);
+    this.sidebarOpen = false;
   }
 }
