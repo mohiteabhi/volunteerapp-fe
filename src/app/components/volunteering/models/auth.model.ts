@@ -21,4 +21,5 @@ export interface JwtResponse {
   tokenType: string;   // “Bearer”
   fullName: string;
   email: string;
+  userId: number;
 }

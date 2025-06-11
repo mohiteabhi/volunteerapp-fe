@@ -35,6 +35,7 @@ export class AuthService {
       .pipe(
         tap((res) => {
           localStorage.setItem('auth_token', res.token);
+          localStorage.setItem('user_id', String(res.userId));
           this._isLoggedIn.next(true);
         }),
         catchError(this.handleError)
@@ -43,7 +44,13 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('user_id');
     this._isLoggedIn.next(false);
+  }
+
+    getUserId(): number | null {
+    const userId = localStorage.getItem('user_id');
+    return userId ? parseInt(userId, 10) : null;
   }
 
   getToken(): string | null {

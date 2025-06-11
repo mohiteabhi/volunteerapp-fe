@@ -1,0 +1,35 @@
+<div class="event-joined-wrapper">
+  <h2>Events You've Joined</h2>
+  <button (click)="returnToDashboard()" class="p-button p-button-secondary">Return to Dashboard</button>
+
+  <table class="p-datatable">
+    <thead>
+      <tr>
+        <th>Sr No</th>
+        <th>Event Name</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Event Date</th>
+        <th>Event Time</th>
+        <th>Organizer</th>
+        <th>Contact</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let join of joinedEvents; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ join.event.eventDes }}</td>
+        <td>{{ join.event.address }}</td>
+        <td>{{ join.event.cityName }}</td>
+        <td>{{ join.event.eventDate }}</td>
+        <td>{{ join.event.eventTime }}</td>
+        <td>{{ join.event.organizerName }}</td>
+        <td>{{ join.event.contact }}</td>
+        <td>
+          <button class="p-button p-button-danger" (click)="exitEvent(join.id)">Exit Event</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -7,6 +7,7 @@ import { SignupComponent } from './components/volunteering/auth/signup/signup.co
 import { DashboardComponent } from './components/volunteering/UserDashboard/dashboard/dashboard.component';
 import { CityEventsComponent } from './components/volunteering/city-events/city-events.component';
 import { OrganizeEventComponent } from './components/volunteering/organize-event/organize-event.component';
+import { EventJoinedComponent } from './pages/event-joined/event-joined.component';
 
 const routes: Routes = [
   { path: '', component: VolunteeringComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   },
   { path: 'city-events', component: CityEventsComponent, canActivate: [AuthGuard] },
   { path: 'organize-event', component: OrganizeEventComponent, canActivate: [AuthGuard] },
+  { path: 'events-joined', component: EventJoinedComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' }
 ];
 
