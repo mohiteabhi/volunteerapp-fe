@@ -9,6 +9,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { SignupRequest, SignupResponse } from '../models/auth.model';
 import { LoginRequest, JwtResponse } from '../models/auth.model';
 import { environment } from 'src/environments/environment';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
       .pipe(
         tap((res) => {
           localStorage.setItem('auth_token', res.token);
-          localStorage.setItem('user_id', String(res.userId));
+          // localStorage.setItem('user_id', String(res.userId));
           this._isLoggedIn.next(true);
         }),
         catchError(this.handleError)
@@ -44,13 +45,23 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('auth_token');
-    localStorage.removeItem('user_id');
+    // localStorage.removeItem('user_id');
     this._isLoggedIn.next(false);
   }
 
     getUserId(): number | null {
-    const userId = localStorage.getItem('user_id');
-    return userId ? parseInt(userId, 10) : null;
+    // const userId = localStorage.getItem('user_id');
+    // return userId ? parseInt(userId, 10) : null;
+        const token = this.getToken();
+    if (!token) return null;
+    
+    try {
+      const decoded: any = jwtDecode(token);
+      return decoded.userId ? parseInt(decoded.userId, 10) : null;
+    } catch (e) {
+      console.error('Error decoding token', e);
+      return null;
+    }
   }
 
   getToken(): string | null {
