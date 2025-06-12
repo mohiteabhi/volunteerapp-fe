@@ -1,35 +1,102 @@
-<div class="event-joined-wrapper">
-  <h2>Events You've Joined</h2>
-  <button (click)="returnToDashboard()" class="p-button p-button-secondary">Return to Dashboard</button>
+<div class="event-joined-container">
+  <div class="header-section">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="pi pi-calendar-check"></i>
+        Events You've Joined
+      </h1>
+      <button 
+        (click)="returnToDashboard()" 
+        class="return-btn">
+        <i class="pi pi-arrow-left"></i>
+        Return to Dashboard
+      </button>
+    </div>
+  </div>
 
-  <table class="p-datatable">
-    <thead>
-      <tr>
-        <th>Sr No</th>
-        <th>Event Name</th>
-        <th>Address</th>
-        <th>City</th>
-        <th>Event Date</th>
-        <th>Event Time</th>
-        <th>Organizer</th>
-        <th>Contact</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let join of joinedEvents; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ join.event.eventDes }}</td>
-        <td>{{ join.event.address }}</td>
-        <td>{{ join.event.cityName }}</td>
-        <td>{{ join.event.eventDate }}</td>
-        <td>{{ join.event.eventTime }}</td>
-        <td>{{ join.event.organizerName }}</td>
-        <td>{{ join.event.contact }}</td>
-        <td>
-          <button class="p-button p-button-danger" (click)="exitEvent(join.id)">Exit Event</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="content-wrapper">
+    <div class="events-card">
+      <div class="card-header">
+        <h3>Your Active Events</h3>
+        <span class="event-count">{{ joinedEvents.length }} Events</span>
+      </div>
+
+      <div class="events-container" *ngIf="joinedEvents.length > 0; else noEvents">
+        <div class="event-item" *ngFor="let join of joinedEvents; let i = index">
+          <div class="event-content">
+            <div class="event-main">
+              <div class="event-header">
+                <h4 class="event-title">{{ join.event.eventDes }}</h4>
+                <div class="event-badge">Event #{{ i + 1 }}</div>
+              </div>
+              
+              <div class="event-details">
+                <div class="detail-row">
+                  <div class="detail-item">
+                    <i class="pi pi-map-marker"></i>
+                    <div class="detail-content">
+                      <span class="detail-label">Location</span>
+                      <span class="detail-value">{{ join.event.address }}, {{ join.event.cityName }}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="detail-item">
+                    <i class="pi pi-calendar"></i>
+                    <div class="detail-content">
+                      <span class="detail-label">Date & Time</span>
+                      <span class="detail-value">{{ join.event.eventDate }} at {{ join.event.eventTime }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="detail-row">
+                  <div class="detail-item">
+                    <i class="pi pi-user"></i>
+                    <div class="detail-content">
+                      <span class="detail-label">Organizer</span>
+                      <span class="detail-value">{{ join.event.organizerName }}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="detail-item">
+                    <i class="pi pi-phone"></i>
+                    <div class="detail-content">
+                      <span class="detail-label">Contact</span>
+                      <span class="detail-value">{{ join.event.contact }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="event-actions">
+              <button 
+                class="exit-btn"
+                (click)="exitEvent(join.id)"
+                [title]="'Exit from ' + join.event.eventDes">
+                <i class="pi pi-sign-out"></i>
+                Exit Event
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noEvents>
+        <div class="no-events">
+          <div class="no-events-icon">
+            <i class="pi pi-calendar-times"></i>
+          </div>
+          <h3>No Events Joined Yet</h3>
+          <p>You haven't joined any events. Explore available events and start making a difference!</p>
+          <button 
+            class="explore-btn"
+            (click)="returnToDashboard()">
+            <i class="pi pi-search"></i>
+            Find Events to Join
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
 </div>

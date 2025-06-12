@@ -1,5 +1,6 @@
 export interface Event {
   id: number;
+  userId: number;
   cityName: string;
   eventDes: string;
   totalVol: number;
@@ -12,6 +13,7 @@ export interface Event {
 }
 
 export interface CreateEventRequest {
+  userId: number;
   cityName: string;
   eventDes: string;
   totalVol: number;

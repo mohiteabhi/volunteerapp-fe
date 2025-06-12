@@ -4,6 +4,7 @@ import { EventService } from '../services/event.service';
 import { Event } from '../models/event.model';
 import { Router } from '@angular/router';
 import { CreateEventRequest } from '../models/event.model';
+import { AuthService } from 'src/app/components/volunteering/services/auth.service';
 
 @Component({
   selector: 'app-organize-event',
@@ -15,13 +16,19 @@ export class OrganizeEventComponent {
   isSubmitting = false;
   submitError = '';
   submitSuccess = false;
+  userId: any;
 
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.eventForm = this.createForm();
+  }
+
+    ngOnInit(): void {
+    this.userId = this.authService.getUserId();
   }
 
   private createForm(): FormGroup {
@@ -72,9 +79,11 @@ export class OrganizeEventComponent {
     const contact = (formValue.contact || '').trim();
     const eventDate = formValue.eventDate; // e.g. "2025-06-10"
     const eventTime = formValue.eventTime ? formValue.eventTime + ':00' : '';
+    const userId = this.userId;
 
     // Create the request payload
     const createEventRequest: CreateEventRequest = {
+      userId,
       cityName,
       eventDes,
       totalVol,
