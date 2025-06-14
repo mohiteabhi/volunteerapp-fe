@@ -160,10 +160,14 @@
                 formControlName="organizerName"
                 placeholder="Enter your full name"
                 class="form-input"
+                readonly
                 [class.error]="isFieldInvalid('organizerName')"
               />
               <div class="error-text" *ngIf="isFieldInvalid('organizerName')">
                 {{ getFieldError("organizerName") }}
+              </div>
+              <div class="loading-indicator" *ngIf="!isUserLoaded">
+                Loading organizer info...
               </div>
             </div>
 
@@ -178,10 +182,14 @@
                 placeholder="Enter 10-digit phone number"
                 maxlength="10"
                 class="form-input"
+                readonly
                 [class.error]="isFieldInvalid('contact')"
               />
               <div class="error-text" *ngIf="isFieldInvalid('contact')">
                 {{ getFieldError("contact") }}
+              </div>
+              <div class="loading-indicator" *ngIf="!isUserLoaded">
+                Loading contact info...
               </div>
             </div>
           </div>

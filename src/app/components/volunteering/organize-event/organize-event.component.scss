@@ -285,9 +285,18 @@ $warning-yellow: #f59e0b;
   &:disabled {
     background: #d1d5db;
   }
+
+  .loading-indicator {
+  color: $text-gray;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.form-input[readonly] {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
 }
 
 // Utility method for getting today's date (add to component)
-.getTodayDate {
-  // This will be implemented in the component TypeScript file
-}

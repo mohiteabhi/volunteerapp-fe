@@ -5,6 +5,7 @@ import { Event } from '../models/event.model';
 import { Router } from '@angular/router';
 import { CreateEventRequest } from '../models/event.model';
 import { AuthService } from 'src/app/components/volunteering/services/auth.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-organize-event',
@@ -17,18 +18,34 @@ export class OrganizeEventComponent {
   submitError = '';
   submitSuccess = false;
   userId: any;
+  isUserLoaded = false;
 
   constructor(
     private fb: FormBuilder,
     private eventService: EventService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService
   ) {
     this.eventForm = this.createForm();
   }
 
     ngOnInit(): void {
     this.userId = this.authService.getUserId();
+    this.userService.getUserById(this.userId).subscribe({
+      next: (user) => {
+        this.eventForm.patchValue({
+          organizerName: user.fullName,
+          contact: user.contactNo
+        });
+        this.isUserLoaded = true;
+      },
+      error: (error) => {
+        console.error('Failed to load user data', error);
+        this.isUserLoaded = true; // Still allow form submission
+      }
+    });
+  
   }
 
   private createForm(): FormGroup {
