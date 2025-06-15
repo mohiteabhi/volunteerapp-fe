@@ -1,6 +1,8 @@
+import { User } from "./joined-event.model";
+
 export interface Event {
   id: number;
-  userId: number;
+  user: User;
   cityName: string;
   eventDes: string;
   totalVol: number;

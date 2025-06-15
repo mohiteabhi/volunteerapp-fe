@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../services/event.service';
 import { Event } from '../models/event.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-city-events',
@@ -16,13 +17,19 @@ export class CityEventsComponent {
   noEventsFound: boolean = false;
   joinedDates: Set<string> = new Set<string>();
 
+  private userId: number | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private auth: AuthService,
     private eventService: EventService
   ) {}
 
   ngOnInit(): void {
+
+    this.userId = this.auth.getUserId();
+
     this.route.queryParams.subscribe((params) => {
       this.cityName = params['search'];
       console.log('Query param cityName:', this.cityName);
@@ -39,17 +46,21 @@ export class CityEventsComponent {
 
     this.eventService.getEventsByCity(this.cityName).subscribe({
       next: (events) => {
-        console.log(events);
-        this.events = events;
+        // 3️⃣ filter out events created by the current user
+        if (this.userId != null) {
+          this.events = events.filter(
+            (e) => e.user.userId !== this.userId
+          );
+        } else {
+          this.events = events;
+        }
+
         this.loading = false;
-        this.noEventsFound = events.length === 0;
+        this.noEventsFound = this.events.length === 0;
       },
-      error: (error) => {
-        console.log(error);
-        this.error = error;
+      error: (err) => {
+        this.error = err;
         this.loading = false;
-        this.noEventsFound = false;
-        console.error('Error loading events:', error);
       },
     });
   }
