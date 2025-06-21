@@ -1,0 +1,97 @@
+<div class="events-organized-wrapper">
+  <button
+    pButton
+    type="button"
+    icon="pi pi-arrow-left"
+    label="Back to Dashboard"
+    class="back-btn"
+    (click)="backToDashboard()"
+  ></button>
+
+  <h2>Your Organized Events</h2>
+  <p *ngIf="loading"><i class="pi pi-spin pi-spinner"></i> Loading…</p>
+  <p *ngIf="error" class="error">{{ error }}</p>
+  <p *ngIf="!loading && events.length === 0">
+    You have not organized any events yet.
+  </p>
+
+  <div class="event-card" *ngFor="let evt of events">
+    <div class="card-header">
+      <h3>Event #{{ evt.id }}</h3>
+    </div>
+
+    <div class="card-body">
+      <div class="field">
+        <label>City</label>
+        <input [(ngModel)]="evt.cityName" pInputText />
+      </div>
+
+      <div class="field">
+        <label>Description</label>
+        <textarea [(ngModel)]="evt.eventDes" pInputTextarea rows="2"></textarea>
+      </div>
+
+      <div class="field-group">
+        <div class="field">
+          <label>Date</label>
+          <input type="date" [(ngModel)]="evt.eventDate" pInputText />
+        </div>
+        <div class="field">
+          <label>Time</label>
+          <input type="time" [(ngModel)]="evt.eventTime" pInputText />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field">
+          <label>Total Volunteers</label>
+          <input type="number" [(ngModel)]="evt.totalVol" pInputText />
+        </div>
+        <div class="field">
+          <label>Joined</label>
+          <input
+            type="number"
+            [(ngModel)]="evt.noOfVolJoined"
+            pInputText
+            disabled
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Address</label>
+        <input [(ngModel)]="evt.address" pInputText />
+      </div>
+
+      <div class="field-group">
+        <div class="field">
+          <label>Organizer Name</label>
+          <input [(ngModel)]="evt.organizerName" pInputText disabled />
+        </div>
+        <div class="field">
+          <label>Contact</label>
+          <input [(ngModel)]="evt.contact" pInputText />
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button
+        pButton
+        type="button"
+        icon="pi pi-save"
+        label="Save"
+        class="save-btn"
+        (click)="saveEvent(evt)"
+      ></button>
+      <button
+        pButton
+        type="button"
+        icon="pi pi-trash"
+        label="Delete"
+        class="delete-btn"
+        (click)="deleteEvent(evt)"
+      ></button>
+    </div>
+  </div>
+</div>

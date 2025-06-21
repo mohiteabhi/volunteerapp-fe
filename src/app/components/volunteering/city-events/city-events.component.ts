@@ -27,7 +27,6 @@ export class CityEventsComponent {
   ) {}
 
   ngOnInit(): void {
-
     this.userId = this.auth.getUserId();
 
     this.route.queryParams.subscribe((params) => {
@@ -46,15 +45,8 @@ export class CityEventsComponent {
 
     this.eventService.getEventsByCity(this.cityName).subscribe({
       next: (events) => {
-        // 3️⃣ filter out events created by the current user
-        if (this.userId != null) {
-          this.events = events.filter(
-            (e) => e.user.userId !== this.userId
-          );
-        } else {
-          this.events = events;
-        }
-
+        // Show all events including user's own events
+        this.events = events;
         this.loading = false;
         this.noEventsFound = this.events.length === 0;
       },
@@ -97,6 +89,21 @@ export class CityEventsComponent {
     });
   }
 
+  viewEventDetails(event: Event): void {
+    // Navigate to event details page or show details modal
+    console.log('Viewing details for event:', event);
+    // You can implement navigation to a details page
+    // this.router.navigate(['/event-details', event.id]);
+    
+    // Or show a modal/dialog with event details
+    // For now, just logging - you can customize this based on your needs
+    alert(`Event Details:\n\nTitle: Volunteer Opportunity\nDescription: ${event.eventDes}\nDate: ${this.formatDate(event.eventDate)}\nTime: ${event.eventTime}\nLocation: ${event.address}\nVolunteers: ${event.noOfVolJoined}/${event.totalVol}`);
+  }
+
+  isMyEvent(event: Event): boolean {
+    return this.userId !== null && event.user.userId === this.userId;
+  }
+
   formatDate(dateString: string): string {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
@@ -114,6 +121,7 @@ export class CityEventsComponent {
 
     return datetimeString.substring(11, 16); // assuming you're extracting HH:mm from an ISO datetime
   }
+
   getVolunteerStatus(event: Event): string {
     const remaining = event.totalVol - event.noOfVolJoined;
     if (remaining <= 0) {

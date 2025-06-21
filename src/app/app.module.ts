@@ -24,6 +24,7 @@ import { CityEventsComponent } from './components/volunteering/city-events/city-
 import { EventService } from './components/volunteering/services/event.service';
 import { OrganizeEventComponent } from './components/volunteering/organize-event/organize-event.component';
 import { EventJoinedComponent } from './pages/event-joined/event-joined.component';
+import { EventsOrganizedComponent } from './pages/events-organized/events-organized.component';
 
 
 
@@ -37,7 +38,8 @@ import { EventJoinedComponent } from './pages/event-joined/event-joined.componen
     DashboardComponent,
     CityEventsComponent,
     OrganizeEventComponent,
-    EventJoinedComponent
+    EventJoinedComponent,
+    EventsOrganizedComponent
   ],
   imports: [
     BrowserModule,

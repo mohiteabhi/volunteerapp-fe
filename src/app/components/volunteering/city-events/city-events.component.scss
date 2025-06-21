@@ -131,10 +131,41 @@
   padding: 1.5rem;
   transition: all 0.3s ease;
   border: 1px solid #e9ecef;
+  position: relative;
 
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  }
+
+  // Special styling for user's own events
+  &.my-event-card {
+    border: 2px solid #28a745;
+    background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+
+    &:hover {
+      box-shadow: 0 15px 35px rgba(40, 167, 69, 0.15);
+    }
+  }
+
+  .my-event-badge {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0 14px 0 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    z-index: 1;
+
+    i {
+      font-size: 0.7rem;
+    }
   }
 
   .event-header {
@@ -264,6 +295,21 @@
         background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
       }
     }
+
+    .details-button {
+      width: 100%;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      border: none;
+      padding: 0.75rem;
+      font-weight: 600;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: white;
+
+      &:hover {
+        background: linear-gradient(135deg, #218838 0%, #1da88a 100%);
+      }
+    }
   }
 }
 
@@ -285,5 +331,10 @@
 
   .event-card {
     padding: 1rem;
+  }
+
+  .my-event-badge {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
   }
 }

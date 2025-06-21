@@ -1,0 +1,27 @@
+.events-organized-wrapper {
+  max-width: 800px;
+  margin: auto;
+  .back-btn { margin-bottom: 1rem; }
+
+  .event-card {
+    border: 1px solid #ddd;
+    border-radius: .5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background: #fff;
+
+    .card-header { margin-bottom: .5rem; }
+    .card-body {
+      .field { margin-bottom: 1rem; }
+      .field-group {
+        display: flex;
+        gap: 1rem;
+      }
+    }
+    .card-footer {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  }
+}

@@ -54,7 +54,14 @@
 
   <!-- Events List -->
   <div class="events-grid" *ngIf="events.length > 0 && !loading && !error">
-    <div class="event-card" *ngFor="let event of events">
+    <div class="event-card" *ngFor="let event of events" [ngClass]="{'my-event-card': isMyEvent(event)}">
+      
+      <!-- My Event Badge -->
+      <div class="my-event-badge" *ngIf="isMyEvent(event)">
+        <i class="pi pi-user"></i>
+        <span>Created by You</span>
+      </div>
+
       <div class="event-header">
         <div class="event-date">
           <i class="pi pi-calendar"></i>
@@ -62,7 +69,6 @@
         </div>
         <div class="event-time">
           <i class="pi pi-clock"></i>
-          <!-- <span>{{ formatTime(event.eventTime) }}</span> -->
           <span>{{ event.eventTime }}</span>
         </div>
       </div>
@@ -102,8 +108,22 @@
         </div>
       </div>
 
+      <!-- Action Buttons -->
       <div class="event-actions">
+        <!-- For events created by the user -->
         <button
+          *ngIf="isMyEvent(event)"
+          pButton
+          type="button"
+          label="View Details"
+          icon="pi pi-eye"
+          class="details-button"
+          (click)="viewEventDetails(event)"
+        ></button>
+
+        <!-- For events created by others -->
+        <button
+          *ngIf="!isMyEvent(event)"
           pButton
           type="button"
           [label]="isEventFull(event) ? 'Event Full' : 'Join Event'"
