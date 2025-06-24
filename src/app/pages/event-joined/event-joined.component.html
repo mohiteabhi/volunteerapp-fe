@@ -1,3 +1,6 @@
+<p class="disclaimer">
+  You can only exit an event up to 48 hours before its date.
+</p>
 <div class="event-joined-container">
   <div class="header-section">
     <div class="header-content">
@@ -71,6 +74,7 @@
 
             <div class="event-actions">
               <button 
+                *ngIf="allowExit(join)" 
                 class="exit-btn"
                 (click)="exitEvent(join.id)"
                 [title]="'Exit from ' + join.event.eventDes">

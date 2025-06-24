@@ -98,6 +98,13 @@ export class EventJoinedComponent implements OnInit {
     alert(`❌ ${message}`);
   }
 
+  allowExit(join: EventJoin): boolean {
+  const eventDate = new Date(join.event.eventDate);
+  const now = new Date();
+  const diffMs = eventDate.getTime() - now.getTime();
+  return diffMs >= 48 * 60 * 60 * 1000; // at least 48h
+}
+
   // Utility method to format date for better display
   formatDate(dateString: string): string {
     try {
