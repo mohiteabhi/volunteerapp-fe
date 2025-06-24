@@ -1,97 +1,252 @@
-<div class="events-organized-wrapper">
-  <button
-    pButton
-    type="button"
-    icon="pi pi-arrow-left"
-    label="Back to Dashboard"
-    class="back-btn"
-    (click)="backToDashboard()"
-  ></button>
+<div class="events-organized-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1 class="page-title">Events You've Organized</h1>
+    <button 
+      pButton 
+      type="button" 
+      icon="pi pi-arrow-left" 
+      label="Return to Dashboard"
+      class="return-btn"
+      (click)="backToDashboard()">
+    </button>
+  </div>
 
-  <h2>Your Organized Events</h2>
-  <p *ngIf="loading"><i class="pi pi-spin pi-spinner"></i> Loading…</p>
-  <p *ngIf="error" class="error">{{ error }}</p>
-  <p *ngIf="!loading && events.length === 0">
-    You have not organized any events yet.
-  </p>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <i class="pi pi-spin pi-spinner loading-spinner"></i>
+    <p>Loading your organized events...</p>
+  </div>
 
-  <div class="event-card" *ngFor="let evt of events">
-    <div class="card-header">
-      <h3>Event #{{ evt.id }}</h3>
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-container">
+    <i class="pi pi-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && !error && events.length === 0" class="empty-state">
+    <i class="pi pi-calendar-plus empty-icon"></i>
+    <h3>No Events Organized Yet</h3>
+    <p>You haven't organized any events yet. Start making a difference in your community!</p>
+    <button 
+      pButton 
+      type="button" 
+      label="Create Your First Event"
+      class="create-event-btn"
+      (click)="createNewEvent()">
+    </button>
+  </div>
+
+  <!-- Events Section -->
+  <div *ngIf="!loading && !error && events.length > 0" class="events-section">
+    <div class="events-header">
+      <h2 class="section-title">Your Active Events</h2>
+      <div class="events-count-badge">{{ events.length }} Event{{ events.length > 1 ? 's' : '' }}</div>
     </div>
 
-    <div class="card-body">
-      <div class="field">
-        <label>City</label>
-        <input [(ngModel)]="evt.cityName" pInputText />
-      </div>
-
-      <div class="field">
-        <label>Description</label>
-        <textarea [(ngModel)]="evt.eventDes" pInputTextarea rows="2"></textarea>
-      </div>
-
-      <div class="field-group">
-        <div class="field">
-          <label>Date</label>
-          <input type="date" [(ngModel)]="evt.eventDate" pInputText />
+    <div class="events-grid">
+      <div class="event-card" *ngFor="let evt of events; let i = index">
+        <!-- Event Header -->
+        <div class="event-header">
+          <div class="event-title">
+            <h3>{{ evt.eventDes || 'Untitled Event' }}</h3>
+            <div class="event-badge">Event #{{ evt.id }}</div>
+          </div>
+          <div class="event-actions">
+            <button 
+              pButton 
+              type="button" 
+              icon="pi pi-pencil"
+              class="p-button-text p-button-rounded edit-toggle-btn"
+              [class.active]="evt.isEditing"
+              (click)="toggleEdit(evt)"
+              pTooltip="Edit Event">
+            </button>
+            <button 
+              pButton 
+              type="button" 
+              icon="pi pi-trash"
+              class="p-button-text p-button-rounded p-button-danger delete-btn"
+              (click)="deleteEvent(evt)"
+              pTooltip="Delete Event">
+            </button>
+          </div>
         </div>
-        <div class="field">
-          <label>Time</label>
-          <input type="time" [(ngModel)]="evt.eventTime" pInputText />
+
+        <!-- Event Details -->
+        <div class="event-details">
+          <!-- Location & Date Row -->
+          <div class="details-row">
+            <div class="detail-item location">
+              <i class="pi pi-map-marker detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Location</label>
+                <input 
+                  *ngIf="evt.isEditing; else locationDisplay"
+                  [(ngModel)]="evt.cityName" 
+                  pInputText 
+                  class="detail-input"
+                  placeholder="Enter city name" />
+                <ng-template #locationDisplay>
+                  <span class="detail-value">{{ evt.cityName || 'Not specified' }}</span>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="detail-item datetime">
+              <i class="pi pi-calendar detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Date & Time</label>
+                <div *ngIf="evt.isEditing; else datetimeDisplay" class="datetime-inputs">
+                  <input 
+                    type="date" 
+                    [(ngModel)]="evt.eventDate" 
+                    pInputText 
+                    class="detail-input date-input" />
+                  <input 
+                    type="time" 
+                    [(ngModel)]="evt.eventTime" 
+                    pInputText 
+                    class="detail-input time-input" />
+                </div>
+                <ng-template #datetimeDisplay>
+                  <span class="detail-value">{{ formatDateTime(evt.eventDate, evt.eventTime) }}</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <!-- Organizer & Contact Row -->
+          <div class="details-row">
+            <div class="detail-item organizer">
+              <i class="pi pi-user detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Organizer</label>
+                <input 
+                  *ngIf="evt.isEditing; else organizerDisplay"
+                  [(ngModel)]="evt.organizerName" 
+                  pInputText 
+                  class="detail-input"
+                  disabled />
+                <ng-template #organizerDisplay>
+                  <span class="detail-value">{{ evt.organizerName || 'Not specified' }}</span>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="detail-item contact">
+              <i class="pi pi-phone detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Contact</label>
+                <input 
+                  *ngIf="evt.isEditing; else contactDisplay"
+                  [(ngModel)]="evt.contact" 
+                  pInputText 
+                  class="detail-input"
+                  placeholder="Contact number" />
+                <ng-template #contactDisplay>
+                  <span class="detail-value">{{ evt.contact || 'Not provided' }}</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Row -->
+          <div class="details-row full-width" *ngIf="evt.isEditing || evt.address">
+            <div class="detail-item address">
+              <i class="pi pi-home detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Address</label>
+                <input 
+                  *ngIf="evt.isEditing; else addressDisplay"
+                  [(ngModel)]="evt.address" 
+                  pInputText 
+                  class="detail-input"
+                  placeholder="Full address" />
+                <ng-template #addressDisplay>
+                  <span class="detail-value">{{ evt.address }}</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description Row -->
+          <div class="details-row full-width" *ngIf="evt.isEditing || evt.eventDes">
+            <div class="detail-item description">
+              <i class="pi pi-align-left detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Description</label>
+                <textarea 
+                  *ngIf="evt.isEditing; else descriptionDisplay"
+                  [(ngModel)]="evt.eventDes" 
+                  pInputTextarea 
+                  rows="3"
+                  class="detail-textarea"
+                  placeholder="Event description">
+                </textarea>
+                <ng-template #descriptionDisplay>
+                  <span class="detail-value description-text">{{ evt.eventDes }}</span>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+
+          <!-- Volunteers Row -->
+          <div class="details-row">
+            <div class="detail-item volunteers">
+              <i class="pi pi-users detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Total Volunteers</label>
+                <input 
+                  *ngIf="evt.isEditing; else totalVolDisplay"
+                  type="number" 
+                  [(ngModel)]="evt.totalVol" 
+                  pInputText 
+                  class="detail-input"
+                  min="1" />
+                <ng-template #totalVolDisplay>
+                  <span class="detail-value">{{ evt.totalVol || 0 }}</span>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="detail-item joined">
+              <i class="pi pi-check-circle detail-icon"></i>
+              <div class="detail-content">
+                <label class="detail-label">Joined</label>
+                <span class="detail-value joined-count">{{ evt.noOfVolJoined || 0 }}</span>
+                <div class="progress-bar">
+                  <div 
+                    class="progress-fill" 
+                    [style.width.%]="getProgressPercentage(evt.noOfVolJoined, evt.totalVol)">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons (shown only when editing) -->
+        <div class="event-footer" *ngIf="evt.isEditing">
+          <button 
+            pButton 
+            type="button" 
+            icon="pi pi-times"
+            label="Cancel"
+            class="p-button-outlined cancel-btn"
+            (click)="cancelEdit(evt)">
+          </button>
+          <button 
+            pButton 
+            type="button" 
+            icon="pi pi-check"
+            label="Save Changes"
+            class="save-btn"
+            (click)="saveEvent(evt)">
+          </button>
         </div>
       </div>
-
-      <div class="field-group">
-        <div class="field">
-          <label>Total Volunteers</label>
-          <input type="number" [(ngModel)]="evt.totalVol" pInputText />
-        </div>
-        <div class="field">
-          <label>Joined</label>
-          <input
-            type="number"
-            [(ngModel)]="evt.noOfVolJoined"
-            pInputText
-            disabled
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Address</label>
-        <input [(ngModel)]="evt.address" pInputText />
-      </div>
-
-      <div class="field-group">
-        <div class="field">
-          <label>Organizer Name</label>
-          <input [(ngModel)]="evt.organizerName" pInputText disabled />
-        </div>
-        <div class="field">
-          <label>Contact</label>
-          <input [(ngModel)]="evt.contact" pInputText />
-        </div>
-      </div>
-    </div>
-
-    <div class="card-footer">
-      <button
-        pButton
-        type="button"
-        icon="pi pi-save"
-        label="Save"
-        class="save-btn"
-        (click)="saveEvent(evt)"
-      ></button>
-      <button
-        pButton
-        type="button"
-        icon="pi pi-trash"
-        label="Delete"
-        class="delete-btn"
-        (click)="deleteEvent(evt)"
-      ></button>
     </div>
   </div>
 </div>

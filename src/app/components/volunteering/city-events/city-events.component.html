@@ -54,8 +54,11 @@
 
   <!-- Events List -->
   <div class="events-grid" *ngIf="events.length > 0 && !loading && !error">
-    <div class="event-card" *ngFor="let event of events" [ngClass]="{'my-event-card': isMyEvent(event)}">
-      
+    <div
+      class="event-card"
+      *ngFor="let event of events"
+      [ngClass]="{ 'my-event-card': isMyEvent(event) }"
+    >
       <!-- My Event Badge -->
       <div class="my-event-badge" *ngIf="isMyEvent(event)">
         <i class="pi pi-user"></i>
@@ -112,25 +115,30 @@
       <div class="event-actions">
         <!-- For events created by the user -->
         <button
-          *ngIf="isMyEvent(event)"
-          pButton
-          type="button"
-          label="View Details"
-          icon="pi pi-eye"
-          class="details-button"
-          (click)="viewEventDetails(event)"
-        ></button>
-
-        <!-- For events created by others -->
-        <button
           *ngIf="!isMyEvent(event)"
           pButton
           type="button"
-          [label]="isEventFull(event) ? 'Event Full' : 'Join Event'"
+          [label]="
+            hasJoined(event)
+              ? 'Already Joined'
+              : isEventFull(event)
+              ? 'Event Full'
+              : 'Join Event'
+          "
           icon="pi pi-user-plus"
           class="join-button"
-          [disabled]="isEventFull(event) || hasJoinedSameDay(event)"
+          [disabled]="isEventFull(event) || hasJoined(event)"
           (click)="joinEvent(event)"
+        ></button>
+
+        <button
+          *ngIf="hasJoined(event)"
+          pButton
+          type="button"
+          label="View My Registration"
+          icon="pi pi-eye"
+          class="details-button"
+          (click)="viewEventDetails(event)"
         ></button>
       </div>
     </div>

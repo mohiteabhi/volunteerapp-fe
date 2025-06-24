@@ -12,6 +12,7 @@ import {
   CreateEventRequest,
   CreateEventResponse,
 } from '../models/event.model';
+import { EventJoin } from '../models/joined-event.model';
 
 @Injectable({
   providedIn: 'root',
@@ -63,6 +64,13 @@ export class EventService {
   // ——— NEW: delete an event ———
   deleteEvent(eventId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${eventId}`);
+  }
+
+  getJoinedEventsByUser(userId: number): Observable<EventJoin[]> { //events joined by user
+    const url = `${this.apiUrl}/joins/user/${userId}`;
+    return this.http
+      .get<EventJoin[]>(url)
+      .pipe(retry(2), catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

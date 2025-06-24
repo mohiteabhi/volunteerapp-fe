@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../services/event.service';
 import { Event } from '../models/event.model';
 import { AuthService } from '../services/auth.service';
+import { EventJoin } from '../models/joined-event.model';
 
 @Component({
   selector: 'app-city-events',
@@ -16,6 +17,7 @@ export class CityEventsComponent {
   error: string = '';
   noEventsFound: boolean = false;
   joinedDates: Set<string> = new Set<string>();
+  joinedEventIds = new Set<number>();
 
   private userId: number | null = null;
 
@@ -29,6 +31,10 @@ export class CityEventsComponent {
   ngOnInit(): void {
     this.userId = this.auth.getUserId();
 
+    if (this.userId !== null) {
+      this.loadJoinedEvents();
+    }
+
     this.route.queryParams.subscribe((params) => {
       this.cityName = params['search'];
       console.log('Query param cityName:', this.cityName);
@@ -36,6 +42,16 @@ export class CityEventsComponent {
         this.loadEventsByCity();
       }
     });
+  }
+
+    private loadJoinedEvents(): void {
+    this.eventService.getJoinedEventsByUser(this.userId!)
+      .subscribe({
+        next: (joins: EventJoin[]) => {
+          joins.forEach(j => this.joinedEventIds.add(j.event.id));
+        },
+        error: err => console.error('Error loading joined events', err)
+      });
   }
 
   loadEventsByCity(): void {
@@ -64,7 +80,7 @@ export class CityEventsComponent {
   joinEvent(event: Event): void {
     // Implement join event functionality
     console.log('Joining event:', event);
-    if (this.isEventFull(event) || this.joinedDates.has(event.eventDate)) {
+    if (this.isEventFull(event) || this.joinedDates.has(event.eventDate) || this.hasJoined(event)) {
       return; // Should never happen because button is disabled when full
     }
     this.joinedDates.add(event.eventDate);
@@ -80,6 +96,7 @@ export class CityEventsComponent {
         const idx = this.events.findIndex((e) => e.id === updatedEvent.id);
         if (idx > -1) {
           this.events[idx] = updatedEvent;
+          this.joinedEventIds.add(updatedEvent.id);
         }
       },
       error: (errMsg) => {
@@ -132,6 +149,10 @@ export class CityEventsComponent {
 
   isEventFull(event: Event): boolean {
     return event.noOfVolJoined >= event.totalVol;
+  }
+
+  hasJoined(event: Event): boolean {
+    return this.joinedEventIds.has(event.id);
   }
 
   hasJoinedSameDay(event: Event): boolean {
