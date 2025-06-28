@@ -141,7 +141,7 @@ export class EventsOrganizedComponent {
 
   createNewEvent(): void {
     // Navigate to create event page
-    this.router.navigate(['/create-event']);
+    this.router.navigate(['/organize-event']);
   }
 
   backToDashboard(): void {

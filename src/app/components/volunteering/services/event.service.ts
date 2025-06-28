@@ -58,7 +58,7 @@ export class EventService {
     eventId: number,
     updatePayload: Partial<Event>
   ): Observable<Event> {
-    return this.http.put<Event>(`${this.apiUrl}/${eventId}`, updatePayload);
+    return this.http.put<Event>(`${this.apiUrl}/events/${eventId}`, updatePayload);
   }
 
   // ——— NEW: delete an event ———
