@@ -9,6 +9,24 @@ $text-gray: #6b7280;
 $error-red: #ef4444;
 $success-green: #10b981;
 
+.loader-overlay {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(255,255,255,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.loader-icon {
+  font-size: 2.5rem;
+  color: #007ad9;
+}
+.blurred {
+  filter: blur(2px);
+  pointer-events: none;
+}
+
 // Login Container
 .login-container {
   position: relative;

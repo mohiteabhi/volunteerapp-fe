@@ -8,6 +8,9 @@
   </div>
 
   <div class="login-card">
+      <div *ngIf="loading" class="loader-overlay">
+      <i class="pi pi-spin pi-spinner loader-icon"></i>
+    </div>
     <!-- Left Side - Login Form -->
     <div class="login-form-container">
       <!-- Logo Section -->

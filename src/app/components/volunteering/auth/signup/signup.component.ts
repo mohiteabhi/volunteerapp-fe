@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { SignupRequest } from '../../models/auth.model';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-signup',
@@ -13,6 +14,7 @@ export class SignupComponent {
   signupForm: FormGroup;
   apiError = '';
   currentQuoteIndex = 0;
+  loading = false;
 
   quotes = [
     'The best way to find yourself is to lose yourself in the service of others. - Mahatma Gandhi',
@@ -66,6 +68,8 @@ export class SignupComponent {
       return;
     }
 
+    this.loading = true;
+
     const fv = this.signupForm.value;
     const payload: SignupRequest = {
       fullName: fv.name.trim(),
@@ -76,7 +80,10 @@ export class SignupComponent {
       password: fv.password,
     };
 
-    this.authService.signup(payload).subscribe({
+    this.authService
+    .signup(payload)
+    .pipe(finalize(() => (this.loading = false)))
+    .subscribe({
       next: () => {
         this.router.navigate(['/login']);
       },

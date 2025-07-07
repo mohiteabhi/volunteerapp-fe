@@ -1,4 +1,9 @@
 <div class="signup-container">
+
+    <div *ngIf="loading" class="loader-overlay">
+    <i class="pi pi-spin pi-spinner loader-icon"></i>
+  </div>
+
   <div class="signup-card">
     <!-- Header Section -->
     <div class="header-section">

@@ -63,7 +63,7 @@ export class EventService {
 
   // ——— NEW: delete an event ———
   deleteEvent(eventId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${eventId}`);
+    return this.http.delete<void>(`${this.apiUrl}/events/${eventId}`);
   }
 
   getJoinedEventsByUser(userId: number): Observable<EventJoin[]> { //events joined by user

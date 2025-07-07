@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ export class LoginComponent {
   loginForm!: FormGroup;
   apiError = '';
   returnUrl = '/dashboard';
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -38,15 +40,19 @@ export class LoginComponent {
       Object.values(this.loginForm.controls).forEach(c => c.markAsTouched());
       return;
     }
+    this.loading = true;
 
-    this.auth.login(this.loginForm.value).subscribe({
-      next: () => {
-        this.router.navigateByUrl(this.returnUrl);
-      },
-      error: errMsg => {
-        this.apiError = errMsg;
-      }
-    });
+    this.auth
+      .login(this.loginForm.value)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: () => {
+          this.router.navigateByUrl(this.returnUrl);
+        },
+        error: errMsg => {
+          this.apiError = errMsg;
+        },
+      });
   }
 
   goBack(): void {
