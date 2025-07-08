@@ -49,12 +49,24 @@ export class AuthService {
     this._isLoggedIn.next(false);
   }
 
-    getUserId(): number | null {
+  forgotPassword(data: { email: string }): Observable<any> {
+    return this.http
+      .post(`${this.baseUrl}/forgot-password`, data)
+      .pipe(catchError(this.handleError));
+  }
+
+  resetPassword(data: { token: string; newPassword: string }): Observable<any> {
+    return this.http
+      .post(`${this.baseUrl}/reset-password`, data)
+      .pipe(catchError(this.handleError));
+  }
+
+  getUserId(): number | null {
     // const userId = localStorage.getItem('user_id');
     // return userId ? parseInt(userId, 10) : null;
-        const token = this.getToken();
+    const token = this.getToken();
     if (!token) return null;
-    
+
     try {
       const decoded: any = jwtDecode(token);
       return decoded.userId ? parseInt(decoded.userId, 10) : null;

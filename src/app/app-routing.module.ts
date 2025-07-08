@@ -9,21 +9,41 @@ import { CityEventsComponent } from './components/volunteering/city-events/city-
 import { OrganizeEventComponent } from './components/volunteering/organize-event/organize-event.component';
 import { EventJoinedComponent } from './pages/event-joined/event-joined.component';
 import { EventsOrganizedComponent } from './pages/events-organized/events-organized.component';
+import { ForgotPasswordComponent } from './components/volunteering/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/volunteering/auth/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', component: VolunteeringComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'city-events', component: CityEventsComponent, canActivate: [AuthGuard] },
-  { path: 'organize-event', component: OrganizeEventComponent, canActivate: [AuthGuard] },
-  { path: 'events-joined', component: EventJoinedComponent, canActivate: [AuthGuard] },
-  { path: 'events-organized', component: EventsOrganizedComponent, canActivate: [AuthGuard] },
-  { path: '**', redirectTo: 'login' }
+  {
+    path: 'city-events',
+    component: CityEventsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'organize-event',
+    component: OrganizeEventComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'events-joined',
+    component: EventJoinedComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'events-organized',
+    component: EventsOrganizedComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: '**', redirectTo: 'login' },
 ];
 
 @NgModule({

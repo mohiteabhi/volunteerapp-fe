@@ -25,6 +25,8 @@ import { EventService } from './components/volunteering/services/event.service';
 import { OrganizeEventComponent } from './components/volunteering/organize-event/organize-event.component';
 import { EventJoinedComponent } from './pages/event-joined/event-joined.component';
 import { EventsOrganizedComponent } from './pages/events-organized/events-organized.component';
+import { ForgotPasswordComponent } from './components/volunteering/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/volunteering/auth/reset-password/reset-password.component';
 
 
 
@@ -39,7 +41,9 @@ import { EventsOrganizedComponent } from './pages/events-organized/events-organi
     CityEventsComponent,
     OrganizeEventComponent,
     EventJoinedComponent,
-    EventsOrganizedComponent
+    EventsOrganizedComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,7 @@
   </div>
 
   <div class="login-card">
-      <div *ngIf="loading" class="loader-overlay">
+    <div *ngIf="loading" class="loader-overlay">
       <i class="pi pi-spin pi-spinner loader-icon"></i>
     </div>
     <!-- Left Side - Login Form -->
@@ -99,7 +99,10 @@
 
         <!-- Forgot Password Link -->
         <div class="forgot-password">
-          <a href="#" class="forgot-link">Forgot your password?</a>
+          <!-- navigates to /forgot-password route -->
+          <a class="forgot-link" routerLink="/forgot-password">
+            Forgot your password?
+          </a>
         </div>
 
         <!-- Action Buttons -->
