@@ -88,6 +88,68 @@
           </div>
         </div>
 
+                  <div class="form-group">
+            <label for="skillsRequired" class="form-label">
+              Skills Required for Volunteers <span class="required">*</span>
+            </label>
+            <div class="skills-input-container">
+              <input
+                id="skillsRequired"
+                type="text"
+                [(ngModel)]="currentSkill"
+                [ngModelOptions]="{standalone: true}"
+                placeholder="Type a skill and press Enter or click Add"
+                class="form-input skills-input"
+                (keyup.enter)="addSkill($event)"
+                [class.error]="isFieldInvalid('skillsRequired')"
+              />
+              <button
+                type="button"
+                class="add-skill-button"
+                (click)="addSkill($event)"
+                [disabled]="!currentSkill.trim()"
+              >
+                <i class="pi pi-plus"></i>
+                Add
+              </button>
+            </div>
+            
+            <!-- Selected Skills Display -->
+            <div class="skills-display" *ngIf="requiredSkills.length > 0">
+              <p-chip
+                *ngFor="let skill of requiredSkills; let i = index"
+                [label]="skill"
+                [removable]="true"
+                (onRemove)="removeSkill(i)"
+                styleClass="skill-chip"
+              ></p-chip>
+            </div>
+
+            <!-- Suggested Skills -->
+            <div class="suggested-skills" *ngIf="filteredSuggestedSkills.length > 0">
+              <label class="suggested-label">Suggested Skills:</label>
+              <div class="suggested-skills-list">
+                <button
+                  type="button"
+                  *ngFor="let skill of filteredSuggestedSkills"
+                  class="suggested-skill-button"
+                  (click)="addSuggestedSkill(skill)"
+                >
+                  <i class="pi pi-plus"></i>
+                  {{ skill }}
+                </button>
+              </div>
+            </div>
+
+            <div class="error-text" *ngIf="isFieldInvalid('skillsRequired')">
+              {{ getFieldError("skillsRequired") }}
+            </div>
+            <div class="skill-hint">
+              <i class="pi pi-info-circle"></i>
+              You can add up to 10 skills. Press Enter or click Add to add a skill.
+            </div>
+          </div>
+
         <!-- Date & Time -->
         <div class="form-section">
           <h3 class="section-title">When & Where</h3>

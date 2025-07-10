@@ -92,6 +92,50 @@
         <div class="error-message" *ngIf="getFieldError('contactNo')">{{ getFieldError('contactNo') }}</div>
       </div>
 
+            <div class="form-group">
+        <label class="form-label">
+          <i class="icon-star"></i>
+          Skills
+          <span class="optional">(Optional)</span>
+        </label>
+        <div class="skills-container">
+          <div class="skill-input-wrapper">
+            <input 
+              type="text" 
+              [(ngModel)]="currentSkill"
+              [ngModelOptions]="{standalone: true}"
+              class="form-input skill-input"
+              placeholder="Type a skill and press Enter"
+              (keyup.enter)="addSkill($event)"
+              maxlength="50">
+            <button type="button" class="add-skill-btn" (click)="addSkill($event)">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+          <div class="skills-chips" *ngIf="skills.length > 0">
+            <p-chip 
+              *ngFor="let skill of skills; let i = index" 
+              [label]="skill" 
+              [removable]="true"
+              (onRemove)="removeSkill(i)"
+              styleClass="skill-chip">
+            </p-chip>
+          </div>
+          <div class="skills-suggestions" *ngIf="suggestedSkills.length > 0">
+            <p class="suggestions-label">Suggested skills:</p>
+            <div class="suggestion-chips">
+              <span 
+                *ngFor="let skill of suggestedSkills" 
+                class="suggestion-chip"
+                (click)="addSuggestedSkill(skill)">
+                {{ skill }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="error-message" *ngIf="getFieldError('skills')">{{ getFieldError('skills') }}</div>
+      </div>
+
       <div class="form-row">
         <div class="form-group half-width">
           <label class="form-label">

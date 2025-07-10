@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EventService } from '../services/event.service';
 import { Event } from '../models/event.model';
+// import { Event as EventModel } from '../models/event.model';
 import { Router } from '@angular/router';
 import { CreateEventRequest } from '../models/event.model';
 import { AuthService } from 'src/app/components/volunteering/services/auth.service';
@@ -19,6 +20,18 @@ export class OrganizeEventComponent {
   submitSuccess = false;
   userId: any;
   isUserLoaded = false;
+
+    // Skills related properties
+  requiredSkills: string[] = [];
+  currentSkill: string = '';
+  suggestedSkills: string[] = [
+    'Teaching', 'Healthcare', 'Environmental', 'Technology', 'Communication',
+    'Leadership', 'Event Management', 'Social Media', 'Photography', 'Writing',
+    'Translation', 'First Aid', 'Fundraising', 'Public Speaking', 'Cooking',
+    'Gardening', 'Sports', 'Music', 'Art', 'Construction', 'Customer Service',
+    'Data Entry', 'Research', 'Marketing', 'Design', 'Planning', 'Coordination',
+    'Training', 'Mentoring', 'Counseling'
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -61,7 +74,47 @@ export class OrganizeEventComponent {
       address: ['', [Validators.required, Validators.minLength(10)]],
       organizerName: ['', [Validators.required, Validators.minLength(2)]],
       contact: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      requiredSkills: ['', [Validators.required, this.skillsValidator.bind(this)]],
     });
+  }
+
+    skillsValidator(control: any) {
+    return this.requiredSkills.length > 0 ? null : { required: true };
+  }
+
+    // Skills management methods
+  addSkill(event: any): void {
+    event.preventDefault();
+    const skillToAdd = this.currentSkill.trim();
+    
+    if (skillToAdd && !this.requiredSkills.includes(skillToAdd) && this.requiredSkills.length < 10) {
+      this.requiredSkills.push(skillToAdd);
+      this.updateSkillsInForm();
+      this.currentSkill = '';
+    }
+  }
+
+  addSuggestedSkill(skill: string): void {
+    if (!this.requiredSkills.includes(skill) && this.requiredSkills.length < 10) {
+      this.requiredSkills.push(skill);
+      this.updateSkillsInForm();
+    }
+  }
+
+  removeSkill(index: number): void {
+    this.requiredSkills.splice(index, 1);
+    this.updateSkillsInForm();
+  }
+
+  private updateSkillsInForm(): void {
+    this.eventForm.patchValue({ requiredSkills: this.requiredSkills });
+    this.eventForm.get('requiredSkills')?.updateValueAndValidity();
+  }
+
+  get filteredSuggestedSkills(): string[] {
+    return this.suggestedSkills.filter(skill => 
+      !this.requiredSkills.includes(skill)
+    ).slice(0, 8); // Show only first 8 suggestions
   }
 
   futureDateValidator(control: any) {
@@ -81,6 +134,13 @@ export class OrganizeEventComponent {
       );
       return;
     }
+
+       if (this.requiredSkills.length === 0) {
+      this.eventForm.get('requiredSkills')?.setErrors({ required: true });
+      this.eventForm.get('requiredSkills')?.markAsTouched();
+      return;
+    }
+
     this.isSubmitting = true;
     this.submitError = '';
 
@@ -110,6 +170,7 @@ export class OrganizeEventComponent {
       address,
       organizerName,
       contact,
+      requiredSkills: this.requiredSkills,
     };
     console.log('Creating event with payload:', createEventRequest);
 

@@ -14,6 +14,7 @@ import { RippleModule } from 'primeng/ripple';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
+import { ChipModule } from 'primeng/chip';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
@@ -58,7 +59,8 @@ import { ResetPasswordComponent } from './components/volunteering/auth/reset-pas
     RippleModule,
     MenubarModule,
     CardModule,
-    InputTextModule
+    InputTextModule,
+    ChipModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

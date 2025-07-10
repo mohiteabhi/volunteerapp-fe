@@ -12,6 +12,7 @@ export interface Event {
   address: string;
   organizerName: string;
   contact: string;
+  requiredSkills: string[];
 }
 
 export interface CreateEventRequest {
@@ -25,6 +26,7 @@ export interface CreateEventRequest {
   address: string;
   organizerName: string;
   contact: string;
+  requiredSkills: string[];
 }
 
 export interface CreateEventResponse {
@@ -39,4 +41,5 @@ export interface CreateEventResponse {
   organizerName: string;
   contact: string;
   message?: string;
+  requiredSkills: string[];
 }

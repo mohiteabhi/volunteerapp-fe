@@ -16,6 +16,14 @@ export class SignupComponent {
   currentQuoteIndex = 0;
   loading = false;
 
+    skills: string[] = [];
+  currentSkill: string = '';
+  suggestedSkills: string[] = [
+    'Teaching', 'Healthcare', 'Environmental', 'Technology', 'Communication',
+    'Leadership', 'Event Management', 'Social Media', 'Photography', 'Writing',
+    'Translation', 'First Aid', 'Fundraising', 'Public Speaking', 'Cooking',
+    'Gardening', 'Sports', 'Music', 'Art', 'Construction'
+  ];
   quotes = [
     'The best way to find yourself is to lose yourself in the service of others. - Mahatma Gandhi',
     'Volunteers do not necessarily have the time; they just have the heart. - Elizabeth Andrew',
@@ -61,6 +69,42 @@ export class SignupComponent {
     return pw === cpw ? null : { passwordMismatch: true };
   }
 
+    addSkill(event: Event): void {
+    event.preventDefault();
+    const skillToAdd = this.currentSkill.trim();
+    
+    if (skillToAdd && !this.skills.includes(skillToAdd) && this.skills.length < 10) {
+      this.skills.push(skillToAdd);
+      this.updateSkillsInForm();
+      this.currentSkill = '';
+      this.updateSuggestedSkills();
+    }
+  }
+
+  addSuggestedSkill(skill: string): void {
+    if (!this.skills.includes(skill) && this.skills.length < 10) {
+      this.skills.push(skill);
+      this.updateSkillsInForm();
+      this.updateSuggestedSkills();
+    }
+  }
+
+  removeSkill(index: number): void {
+    this.skills.splice(index, 1);
+    this.updateSkillsInForm();
+    this.updateSuggestedSkills();
+  }
+
+  private updateSkillsInForm(): void {
+    this.signupForm.patchValue({ skills: this.skills });
+  }
+
+  private updateSuggestedSkills(): void {
+    this.suggestedSkills = this.suggestedSkills.filter(skill => 
+      !this.skills.includes(skill)
+    );
+  }
+
   onSubmit() {
     this.apiError = '';
     if (this.signupForm.invalid) {
@@ -78,6 +122,7 @@ export class SignupComponent {
       address: fv.address.trim(),
       contactNo: fv.contactNo.trim(),
       password: fv.password,
+      skills: fv.skills.map((s: string) => s.trim()),
     };
 
     this.authService
@@ -112,6 +157,7 @@ export class SignupComponent {
       return 'Please enter a valid 10-digit contact number';
     if (fn === 'confirmPassword' && f.errors['passwordMismatch'])
       return 'Passwords do not match';
+    
     return '';
   }
 
@@ -126,6 +172,7 @@ export class SignupComponent {
           contactNo: 'Contact number',
           password: 'Password',
           confirmPassword: 'Confirm password',
+          skills: 'Skills'
         } as Record<string, string>
       )[fn] || fn
     );

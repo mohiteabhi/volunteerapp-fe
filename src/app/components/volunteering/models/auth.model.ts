@@ -5,6 +5,7 @@ export interface SignupRequest {
   address: string;
   contactNo: string;
   password: string;
+  skills: string[];
 }
 
 export interface SignupResponse {
