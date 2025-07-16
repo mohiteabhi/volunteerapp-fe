@@ -95,6 +95,42 @@
           </div>
         </div>
 
+        <!-- Required Skills Section -->
+        <div
+          class="required-skills"
+          *ngIf="event.requiredSkills && event.requiredSkills.length > 0"
+        >
+          <div class="skills-header">
+            <i class="pi pi-cog"></i>
+            <span class="skills-title">Required Skills</span>
+            <span class="skills-note">• No skills? Still welcome!</span>
+          </div>
+          <div class="skills-container">
+            <span
+              class="skill-tag"
+              *ngFor="let skill of event.requiredSkills; let i = index"
+              [title]="skill"
+              [class.more-skills]="i >= 6"
+            >
+              <span *ngIf="i < 6">{{ skill }}</span>
+              <span
+                *ngIf="i === 6 && event.requiredSkills.length > 6"
+                class="more-count"
+              >
+                +{{ event.requiredSkills.length - 6 }} more
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- No Skills Required -->
+        <div class="no-skills" *ngIf="!event.requiredSkills || event.requiredSkills.length === 0">
+          <div class="no-skills-message">
+            <i class="pi pi-heart"></i>
+            <span>No specific skills required - Everyone welcome!</span>
+          </div>
+        </div>
+
         <div class="volunteer-info">
           <div class="volunteer-count">
             <span class="joined">{{ event.noOfVolJoined }}</span>

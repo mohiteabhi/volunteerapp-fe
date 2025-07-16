@@ -3,6 +3,7 @@ export interface SignupRequest {
   age: number;
   email: string; // now required
   address: string;
+  cityName: string;
   contactNo: string;
   password: string;
   skills: string[];

@@ -2,7 +2,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .page-header {
@@ -14,7 +14,7 @@
   .back-button {
     font-size: 1.2rem;
     color: #6c757d;
-    
+
     &:hover {
       background-color: #f8f9fa;
       color: #495057;
@@ -150,18 +150,19 @@
 
   .my-event-badge {
     position: absolute;
-    top: -1px;
-    right: -1px;
+    top: 0px;
+    right: 0px;
     background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
     color: white;
     padding: 0.4rem 0.8rem;
-    border-radius: 0 14px 0 8px;
+    border-radius: 0 15px 0 12px;
     font-size: 0.8rem;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    z-index: 1;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
 
     i {
       font-size: 0.7rem;
@@ -220,6 +221,102 @@
         i {
           color: #667eea;
           width: 16px;
+        }
+      }
+    }
+
+    .required-skills {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+      border-radius: 12px;
+      border: 1px solid #e3e8ff;
+
+      .skills-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+        flex-wrap: wrap;
+
+        i {
+          color: #667eea;
+          font-size: 1rem;
+        }
+
+        .skills-title {
+          font-weight: 600;
+          color: #2c3e50;
+          font-size: 0.9rem;
+        }
+        .skills-note {
+          color: #28a745;
+          font-size: 0.75rem;
+          font-weight: 500;
+          margin-left: 0.25rem;
+        }
+      }
+
+      .skills-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        .skill-tag {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 0.4rem 0.8rem;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 500;
+          display: inline-block;
+          max-width: 120px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          transition: all 0.2s ease;
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+          }
+          &.more-skills {
+            display: none;
+          }
+          .more-count {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+            color: #212529;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+
+            &:hover {
+              transform: translateY(-1px);
+              box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+            }
+          }
+        }
+      }
+    }
+
+    .no-skills {
+      margin-bottom: 1rem;
+      padding: 0.75rem 1rem;
+      background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);
+      border-radius: 12px;
+      border: 1px solid #ffe4cc;
+
+      .no-skills-message {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #d68910;
+        font-size: 0.9rem;
+        font-weight: 500;
+
+        i {
+          color: #f39c12;
+          font-size: 1rem;
         }
       }
     }
@@ -331,6 +428,28 @@
 
   .event-card {
     padding: 1rem;
+
+    .event-content {
+      .required-skills {
+        padding: 0.75rem;
+
+        .skills-container {
+          .skill-tag {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+            max-width: 100px;
+          }
+        }
+      }
+
+      .no-skills {
+        padding: 0.5rem 0.75rem;
+
+        .no-skills-message {
+          font-size: 0.85rem;
+        }
+      }
+    }
   }
 
   .my-event-badge {

@@ -1,25 +1,28 @@
 <div class="signup-container">
-
-    <div *ngIf="loading" class="loader-overlay">
+  <!-- <div *ngIf="loading" class="loader-overlay">
     <i class="pi pi-spin pi-spinner loader-icon"></i>
-  </div>
+  </div> -->
 
   <div class="signup-card">
     <!-- Header Section -->
     <div class="header-section">
       <div class="logo">
-        <img src="assets/logo1.png" alt="SwayamSevak Logo" class="logo-img">
+        <img src="assets/logo1.png" alt="SwayamSevak Logo" class="logo-img" />
       </div>
       <h1 class="brand-name">
-        <span class="brand-swayam">SWAYAM</span><span class="brand-sevak">SEVAK</span>
+        <span class="brand-swayam">SWAYAM</span
+        ><span class="brand-sevak">SEVAK</span>
       </h1>
       <p class="platform-text">VOLUNTEER PLATFORM</p>
-      
+
       <h2 class="welcome-title">Join Our Mission!</h2>
-      <p class="welcome-subtitle">Register to start your journey of making a difference</p>
-      
+      <p class="welcome-subtitle">
+        Register to start your journey of making a difference
+      </p>
+
       <div class="login-link">
-        Already have an account? <a href="/login" class="create-account-link">Sign In →</a>
+        Already have an account?
+        <a href="/login" class="create-account-link">Sign In →</a>
       </div>
     </div>
 
@@ -31,13 +34,16 @@
             <i class="icon-user"></i>
             Full Name
           </label>
-          <input 
-            type="text" 
+          <input
+            type="text"
             formControlName="name"
             class="form-input"
             placeholder="Enter your full name"
-            [class.error]="getFieldError('name')">
-          <div class="error-message" *ngIf="getFieldError('name')">{{ getFieldError('name') }}</div>
+            [class.error]="getFieldError('name')"
+          />
+          <div class="error-message" *ngIf="getFieldError('name')">
+            {{ getFieldError("name") }}
+          </div>
         </div>
 
         <div class="form-group half-width">
@@ -45,22 +51,29 @@
             <i class="icon-calendar"></i>
             Age
           </label>
-          <input 
-            type="number" 
+          <input
+            type="number"
             formControlName="age"
             class="form-input"
             placeholder="Enter your age"
-            [class.error]="getFieldError('age')">
-          <div class="error-message" *ngIf="getFieldError('age')">{{ getFieldError('age') }}</div>
+            [class.error]="getFieldError('age')"
+          />
+          <div class="error-message" *ngIf="getFieldError('age')">
+            {{ getFieldError("age") }}
+          </div>
         </div>
       </div>
 
       <div class="form-group">
         <label>Email Address</label>
-        <input type="email" formControlName="email" class="form-input"
-               [class.error]="getFieldError('email')">
+        <input
+          type="email"
+          formControlName="email"
+          class="form-input"
+          [class.error]="getFieldError('email')"
+        />
         <div class="error-message" *ngIf="getFieldError('email')">
-          {{ getFieldError('email') }}
+          {{ getFieldError("email") }}
         </div>
       </div>
 
@@ -69,13 +82,33 @@
           <i class="icon-map-pin"></i>
           Address
         </label>
-        <textarea 
+        <textarea
           formControlName="address"
           class="form-input textarea"
           placeholder="Enter your complete address"
           rows="3"
-          [class.error]="getFieldError('address')"></textarea>
-        <div class="error-message" *ngIf="getFieldError('address')">{{ getFieldError('address') }}</div>
+          [class.error]="getFieldError('address')"
+        ></textarea>
+        <div class="error-message" *ngIf="getFieldError('address')">
+          {{ getFieldError("address") }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <i class="icon-city"></i>
+          City
+        </label>
+        <input
+          type="text"
+          formControlName="cityName"
+          class="form-input"
+          placeholder="Enter City"
+          [class.error]="getFieldError('city')"
+        />
+        <div class="error-message" *ngIf="getFieldError('city')">
+          {{ getFieldError("city") }}
+        </div>
       </div>
 
       <div class="form-group">
@@ -83,16 +116,19 @@
           <i class="icon-phone"></i>
           Contact Number
         </label>
-        <input 
-          type="tel" 
+        <input
+          type="tel"
           formControlName="contactNo"
           class="form-input"
           placeholder="Enter your 10-digit contact number"
-          [class.error]="getFieldError('contactNo')">
-        <div class="error-message" *ngIf="getFieldError('contactNo')">{{ getFieldError('contactNo') }}</div>
+          [class.error]="getFieldError('contactNo')"
+        />
+        <div class="error-message" *ngIf="getFieldError('contactNo')">
+          {{ getFieldError("contactNo") }}
+        </div>
       </div>
 
-            <div class="form-group">
+      <div class="form-group">
         <label class="form-label">
           <i class="icon-star"></i>
           Skills
@@ -100,40 +136,49 @@
         </label>
         <div class="skills-container">
           <div class="skill-input-wrapper">
-            <input 
-              type="text" 
+            <input
+              type="text"
               [(ngModel)]="currentSkill"
-              [ngModelOptions]="{standalone: true}"
+              [ngModelOptions]="{ standalone: true }"
               class="form-input skill-input"
               placeholder="Type a skill and press Enter"
               (keyup.enter)="addSkill($event)"
-              maxlength="50">
-            <button type="button" class="add-skill-btn" (click)="addSkill($event)">
+              maxlength="50"
+            />
+            <button
+              type="button"
+              class="add-skill-btn"
+              (click)="addSkill($event)"
+            >
               <i class="pi pi-plus"></i>
             </button>
           </div>
           <div class="skills-chips" *ngIf="skills.length > 0">
-            <p-chip 
-              *ngFor="let skill of skills; let i = index" 
-              [label]="skill" 
+            <p-chip
+              *ngFor="let skill of skills; let i = index"
+              [label]="skill"
               [removable]="true"
               (onRemove)="removeSkill(i)"
-              styleClass="skill-chip">
+              styleClass="skill-chip"
+            >
             </p-chip>
           </div>
           <div class="skills-suggestions" *ngIf="suggestedSkills.length > 0">
             <p class="suggestions-label">Suggested skills:</p>
             <div class="suggestion-chips">
-              <span 
-                *ngFor="let skill of suggestedSkills" 
+              <span
+                *ngFor="let skill of suggestedSkills"
                 class="suggestion-chip"
-                (click)="addSuggestedSkill(skill)">
+                (click)="addSuggestedSkill(skill)"
+              >
                 {{ skill }}
               </span>
             </div>
           </div>
         </div>
-        <div class="error-message" *ngIf="getFieldError('skills')">{{ getFieldError('skills') }}</div>
+        <div class="error-message" *ngIf="getFieldError('skills')">
+          {{ getFieldError("skills") }}
+        </div>
       </div>
 
       <div class="form-row">
@@ -142,13 +187,16 @@
             <i class="icon-lock"></i>
             Password
           </label>
-          <input 
-            type="password" 
+          <input
+            type="password"
             formControlName="password"
             class="form-input"
             placeholder="Create a password"
-            [class.error]="getFieldError('password')">
-          <div class="error-message" *ngIf="getFieldError('password')">{{ getFieldError('password') }}</div>
+            [class.error]="getFieldError('password')"
+          />
+          <div class="error-message" *ngIf="getFieldError('password')">
+            {{ getFieldError("password") }}
+          </div>
         </div>
 
         <div class="form-group half-width">
@@ -156,13 +204,16 @@
             <i class="icon-lock"></i>
             Confirm Password
           </label>
-          <input 
-            type="password" 
+          <input
+            type="password"
             formControlName="confirmPassword"
             class="form-input"
             placeholder="Re-enter your password"
-            [class.error]="getFieldError('confirmPassword')">
-          <div class="error-message" *ngIf="getFieldError('confirmPassword')">{{ getFieldError('confirmPassword') }}</div>
+            [class.error]="getFieldError('confirmPassword')"
+          />
+          <div class="error-message" *ngIf="getFieldError('confirmPassword')">
+            {{ getFieldError("confirmPassword") }}
+          </div>
         </div>
       </div>
 
@@ -172,7 +223,11 @@
       </button>
     </form>
 
-    <div *ngIf="apiError" class="error-message" style="text-align:center; margin-top:1rem;">
+    <div
+      *ngIf="apiError"
+      class="error-message"
+      style="text-align: center; margin-top: 1rem"
+    >
       {{ apiError }}
     </div>
 
@@ -202,7 +257,8 @@
     <div class="content">
       <h2 class="panel-title">Start Your Journey</h2>
       <p class="panel-description">
-        Join thousands of passionate volunteers making a real difference in communities across the world.
+        Join thousands of passionate volunteers making a real difference in
+        communities across the world.
       </p>
 
       <!-- Animated Quote -->

@@ -16,13 +16,29 @@ export class SignupComponent {
   currentQuoteIndex = 0;
   loading = false;
 
-    skills: string[] = [];
+  skills: string[] = [];
   currentSkill: string = '';
   suggestedSkills: string[] = [
-    'Teaching', 'Healthcare', 'Environmental', 'Technology', 'Communication',
-    'Leadership', 'Event Management', 'Social Media', 'Photography', 'Writing',
-    'Translation', 'First Aid', 'Fundraising', 'Public Speaking', 'Cooking',
-    'Gardening', 'Sports', 'Music', 'Art', 'Construction'
+    'Teaching',
+    'Healthcare',
+    'Environmental',
+    'Technology',
+    'Communication',
+    'Leadership',
+    'Event Management',
+    'Social Media',
+    'Photography',
+    'Writing',
+    'Translation',
+    'First Aid',
+    'Fundraising',
+    'Public Speaking',
+    'Cooking',
+    'Gardening',
+    'Sports',
+    'Music',
+    'Art',
+    'Construction',
   ];
   quotes = [
     'The best way to find yourself is to lose yourself in the service of others. - Mahatma Gandhi',
@@ -45,13 +61,15 @@ export class SignupComponent {
           [Validators.required, Validators.min(16), Validators.max(100)],
         ],
         email: ['', [Validators.required, Validators.email]],
-        address: ['', [Validators.required, Validators.minLength(10)]],
+        address: ['', [Validators.required, Validators.minLength(5)]],
+        cityName: ['', [Validators.required, Validators.minLength(3)]],
         contactNo: [
           '',
           [Validators.required, Validators.pattern('^[0-9]{10}$')],
         ],
         password: ['', [Validators.required, Validators.minLength(8)]],
         confirmPassword: ['', [Validators.required]],
+        skills: [[]],
       },
       { validators: this.passwordMatchValidator }
     );
@@ -69,11 +87,15 @@ export class SignupComponent {
     return pw === cpw ? null : { passwordMismatch: true };
   }
 
-    addSkill(event: Event): void {
+  addSkill(event: Event): void {
     event.preventDefault();
     const skillToAdd = this.currentSkill.trim();
-    
-    if (skillToAdd && !this.skills.includes(skillToAdd) && this.skills.length < 10) {
+
+    if (
+      skillToAdd &&
+      !this.skills.includes(skillToAdd) &&
+      this.skills.length < 10
+    ) {
       this.skills.push(skillToAdd);
       this.updateSkillsInForm();
       this.currentSkill = '';
@@ -100,8 +122,8 @@ export class SignupComponent {
   }
 
   private updateSuggestedSkills(): void {
-    this.suggestedSkills = this.suggestedSkills.filter(skill => 
-      !this.skills.includes(skill)
+    this.suggestedSkills = this.suggestedSkills.filter(
+      (skill) => !this.skills.includes(skill)
     );
   }
 
@@ -120,22 +142,23 @@ export class SignupComponent {
       age: parseInt(fv.age, 10),
       email: fv.email.trim(),
       address: fv.address.trim(),
+      cityName: fv.cityName.trim(),
       contactNo: fv.contactNo.trim(),
       password: fv.password,
       skills: fv.skills.map((s: string) => s.trim()),
     };
 
     this.authService
-    .signup(payload)
-    .pipe(finalize(() => (this.loading = false)))
-    .subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      },
-      error: (errMsg) => {
-        this.apiError = errMsg;
-      },
-    });
+      .signup(payload)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/login']);
+        },
+        error: (errMsg) => {
+          this.apiError = errMsg;
+        },
+      });
   }
 
   private markAllTouched() {
@@ -157,7 +180,7 @@ export class SignupComponent {
       return 'Please enter a valid 10-digit contact number';
     if (fn === 'confirmPassword' && f.errors['passwordMismatch'])
       return 'Passwords do not match';
-    
+
     return '';
   }
 
@@ -169,10 +192,11 @@ export class SignupComponent {
           age: 'Age',
           email: 'Email',
           address: 'Address',
+          cityName: 'City',
           contactNo: 'Contact number',
           password: 'Password',
           confirmPassword: 'Confirm password',
-          skills: 'Skills'
+          skills: 'Skills',
         } as Record<string, string>
       )[fn] || fn
     );
