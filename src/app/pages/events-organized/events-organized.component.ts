@@ -8,12 +8,13 @@ import { Event } from 'src/app/components/volunteering/models/event.model';
 interface ExtendedEvent extends Event {
   isEditing?: boolean;
   originalData?: Partial<Event>;
+  skillsString?: string;
 }
 
 @Component({
   selector: 'app-events-organized',
   templateUrl: './events-organized.component.html',
-  styleUrls: ['./events-organized.component.scss']
+  styleUrls: ['./events-organized.component.scss'],
 })
 export class EventsOrganizedComponent {
   events: ExtendedEvent[] = [];
@@ -40,19 +41,21 @@ export class EventsOrganizedComponent {
   loadOrganizedEvents(): void {
     this.loading = true;
     this.error = '';
-    
+
     this.eventService.getEventsByUser(this.userId!).subscribe({
       next: (evts) => {
-        this.events = evts.map(evt => ({
+        this.events = evts.map((evt) => ({
           ...evt,
-          isEditing: false
+          isEditing: false,
+          skillsString: evt.requiredSkills?.join(', ') || '',
         }));
         this.loading = false;
       },
       error: (err) => {
-        this.error = typeof err === 'string' ? err : 'Failed to load organized events.';
+        this.error =
+          typeof err === 'string' ? err : 'Failed to load organized events.';
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -62,12 +65,12 @@ export class EventsOrganizedComponent {
       this.cancelEdit(evt);
     } else {
       // Enter edit mode - first cancel any other editing events
-      this.events.forEach(e => {
+      this.events.forEach((e) => {
         if (e.isEditing && e.id !== evt.id) {
           this.cancelEdit(e);
         }
       });
-      
+
       // Store original data for cancel functionality
       evt.originalData = {
         cityName: evt.cityName,
@@ -76,9 +79,10 @@ export class EventsOrganizedComponent {
         eventDate: evt.eventDate,
         eventTime: evt.eventTime,
         address: evt.address,
-        contact: evt.contact
+        contact: evt.contact,
       };
       evt.isEditing = true;
+      evt.skillsString = evt.requiredSkills?.join(', ') || '';
     }
   }
 
@@ -87,11 +91,18 @@ export class EventsOrganizedComponent {
       // Restore original data
       Object.assign(evt, evt.originalData);
       evt.originalData = undefined;
+      evt.skillsString = evt.requiredSkills?.join(', ') || '';
     }
     evt.isEditing = false;
   }
 
   saveEvent(evt: ExtendedEvent): void {
+    evt.requiredSkills =
+      evt.skillsString
+        ?.split(',')
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0) || [];
+
     const payload: Partial<Event> = {
       cityName: evt.cityName,
       eventDes: evt.eventDes,
@@ -101,15 +112,17 @@ export class EventsOrganizedComponent {
       eventTime: evt.eventTime,
       address: evt.address,
       organizerName: evt.organizerName,
-      contact: evt.contact
+      contact: evt.contact,
+      requiredSkills: evt.requiredSkills,
     };
 
     this.eventService.updateEvent(evt.id, payload).subscribe({
       next: (updated) => {
         Object.assign(evt, updated);
+        evt.skillsString = evt.requiredSkills.join(', ');
         evt.isEditing = false;
         evt.originalData = undefined;
-        
+
         // Show success message (you can implement toast notification here)
         console.log('Event updated successfully');
       },
@@ -117,14 +130,14 @@ export class EventsOrganizedComponent {
         console.error('Update failed', err);
         // You can implement a toast notification or modal here
         alert('Failed to save changes. Please try again.');
-      }
+      },
     });
   }
 
   deleteEvent(evt: ExtendedEvent): void {
     const eventTitle = evt.eventDes || `Event #${evt.id}`;
     const confirmMessage = `Are you sure you want to delete "${eventTitle}"? This action cannot be undone.`;
-    
+
     if (!confirm(confirmMessage)) return;
 
     this.eventService.deleteEvent(evt.id).subscribe({
@@ -135,7 +148,7 @@ export class EventsOrganizedComponent {
       error: (err) => {
         console.error('Delete failed', err);
         alert('Failed to delete event. Please try again.');
-      }
+      },
     });
   }
 
@@ -150,20 +163,20 @@ export class EventsOrganizedComponent {
 
   formatDateTime(date: string, time: string): string {
     if (!date) return 'Date not set';
-    
+
     try {
       const dateObj = new Date(date);
       const dateStr = dateObj.toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'short',
-        day: 'numeric'
+        day: 'numeric',
       });
-      
+
       if (time) {
         const timeStr = this.formatTime(time);
         return `${dateStr} at ${timeStr}`;
       }
-      
+
       return dateStr;
     } catch (error) {
       return 'Invalid date';
@@ -186,4 +199,18 @@ export class EventsOrganizedComponent {
     if (!total || total <= 0) return 0;
     const percentage = (joined / total) * 100;
     return Math.min(Math.max(percentage, 0), 100);
-  }}
+  }
+
+  getSkillsArray(skills: string | string[]): string[] {
+    if (Array.isArray(skills)) {
+      return skills;
+    }
+    if (typeof skills === 'string') {
+      return skills
+        .split(',')
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+    }
+    return [];
+  }
+}

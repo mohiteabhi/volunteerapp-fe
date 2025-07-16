@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,17 +14,21 @@ export class DashboardComponent implements OnInit {
   searchQuery: string = '';
   userName: string = 'Volunteer'; // This should come from your auth service
   sidebarOpen: boolean = false;
+  userId: any;
+  
 
-  constructor(private router: Router, private auth: AuthService,) { }
+  constructor(private router: Router, private auth: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
-    // Initialize component, get user data from auth service
-    this.getUserName();
-  }
-
-  getUserName(): void {
-    // Get user name from your auth service
-    // Example: this.userName = this.authService.getUserName();
+    this.userId = this.auth.getUserId();
+        this.userService.getUserById(this.userId).subscribe({
+      next: (user) => {
+        this.userName = user.fullName
+      },
+      error: (error) => {
+        console.error('Failed to load user data', error); // Still allow form submission
+      }
+    });
   }
 
   toggleSidebar(): void {
