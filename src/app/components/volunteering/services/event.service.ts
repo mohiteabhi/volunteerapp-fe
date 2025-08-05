@@ -31,7 +31,7 @@ export class EventService {
   }
 
   getEventsByCity(cityName: string): Observable<Event[]> {
-    const url = `${this.apiUrl}/events/city/${cityName}`;
+    const url = `${this.apiUrl}/events/city/${cityName}/active`;
     return this.http
       .get<Event[]>(url)
       .pipe(retry(2), catchError(this.handleError));

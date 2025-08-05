@@ -158,4 +158,8 @@ export class CityEventsComponent {
   hasJoinedSameDay(event: Event): boolean {
     return this.joinedDates.has(event.eventDate);
   }
+
+    onOrganizeEvent(): void {
+    this.router.navigate(['/organize-event']);
+  }
 }

@@ -170,6 +170,38 @@
         </div>
       </div>
 
+      <div class="smart-recommendations-section">
+  <div class="section-header">
+    <h2>Smart Recommendations</h2>
+    <p>AI-powered event suggestions based on your skills and location</p>
+  </div>
+  
+  <div class="smart-card">
+    <div class="smart-card-content">
+      <div class="ai-icon">
+        <i class="pi pi-sparkles"></i>
+      </div>
+      <div class="smart-info">
+        <h3>Get Personalized Event Suggestions</h3>
+        <p>Our AI analyzes your skills, location, and preferences to find the perfect volunteer opportunities for you.</p>
+        <ul class="smart-features">
+          <li><i class="pi pi-check"></i> Skill-based matching</li>
+          <li><i class="pi pi-check"></i> Location preferences</li>
+          <li><i class="pi pi-check"></i> Smart scoring system</li>
+        </ul>
+      </div>
+    </div>
+    <button 
+      pButton 
+      type="button" 
+      label="Get Smart Recommendations" 
+      icon="pi pi-magic-wand"
+      class="smart-button"
+      (click)="onGetSmartRecommendations()"
+    ></button>
+  </div>
+</div>
+
       <!-- Stats Section -->
       <div class="stats-section">
         <div class="stats-container">

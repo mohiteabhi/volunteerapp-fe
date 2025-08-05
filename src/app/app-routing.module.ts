@@ -11,6 +11,7 @@ import { EventJoinedComponent } from './pages/event-joined/event-joined.componen
 import { EventsOrganizedComponent } from './pages/events-organized/events-organized.component';
 import { ForgotPasswordComponent } from './components/volunteering/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/volunteering/auth/reset-password/reset-password.component';
+import { SmartRecommendationsComponent } from './components/volunteering/UserDashboard/smart-recommendations/smart-recommendations.component';
 
 const routes: Routes = [
   { path: '', component: VolunteeringComponent },
@@ -41,6 +42,11 @@ const routes: Routes = [
   {
     path: 'events-organized',
     component: EventsOrganizedComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'smart-recommendations',
+    component: SmartRecommendationsComponent,
     canActivate: [AuthGuard],
   },
   { path: '**', redirectTo: 'login' },

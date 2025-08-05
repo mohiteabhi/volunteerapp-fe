@@ -47,6 +47,11 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(['/organize-event']);
   }
 
+    onGetSmartRecommendations(): void {
+    console.log('Navigate to smart recommendations page');
+    this.router.navigate(['/smart-recommendations']);
+  }
+
   onKeyPress(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       this.onSearchEvents();

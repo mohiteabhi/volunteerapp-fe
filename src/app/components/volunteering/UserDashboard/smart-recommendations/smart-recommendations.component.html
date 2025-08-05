@@ -1,0 +1,205 @@
+<div class="smart-recommendations-container">
+  <!-- Header Section -->
+  <div class="page-header">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-arrow-left"
+      class="p-button-text back-button"
+      (click)="goBack()"
+    ></button>
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="pi pi-sparkles"></i>
+        Smart Event Recommendations
+      </h1>
+      <p class="page-subtitle">AI-powered suggestions based on your skills and location</p>
+    </div>
+  </div>
+
+  <!-- Analyzing State -->
+  <div class="analyzing-container" *ngIf="analyzing">
+    <div class="analyzing-content">
+      <div class="ai-brain">
+        <i class="pi pi-cog pi-spin"></i>
+        <div class="brain-waves">
+          <div class="wave wave1"></div>
+          <div class="wave wave2"></div>
+          <div class="wave wave3"></div>
+        </div>
+      </div>
+      <h3>Analyzing Your Profile</h3>
+      <div class="analyzing-steps">
+        <div class="step">
+          <i class="pi pi-check-circle"></i>
+          <span>Reviewing your skills</span>
+        </div>
+        <div class="step">
+          <i class="pi pi-check-circle"></i>
+          <span>Checking your location</span>
+        </div>
+        <div class="step active">
+          <i class="pi pi-spin pi-spinner"></i>
+          <span>Finding perfect matches</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading && !analyzing">
+    <i class="pi pi-spin pi-spinner loading-icon"></i>
+    <p>Loading recommendations...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-container" *ngIf="error && !loading && !analyzing">
+    <i class="pi pi-exclamation-triangle error-icon"></i>
+    <h3>Oops! Something went wrong</h3>
+    <p>{{ error }}</p>
+    <button
+      pButton
+      type="button"
+      label="Try Again"
+      icon="pi pi-refresh"
+      class="retry-button"
+      (click)="loadSmartRecommendations()"
+    ></button>
+  </div>
+
+  <!-- No Recommendations -->
+  <div class="no-recommendations-container" *ngIf="recommendations.length === 0 && !loading && !error && !analyzing">
+    <div class="no-recommendations-content">
+      <i class="pi pi-heart"></i>
+      <h3>No Recommendations Yet</h3>
+      <p>We couldn't find any events matching your profile right now.</p>
+      <p>Try updating your skills or check back later for new events!</p>
+      <button
+        pButton
+        type="button"
+        label="Update Profile"
+        icon="pi pi-user-edit"
+        class="update-profile-button"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Recommendations List -->
+  <div class="recommendations-grid" *ngIf="recommendations.length > 0 && !loading && !error && !analyzing">
+    <div class="recommendations-header">
+      <h2>{{ recommendations.length }} Recommendations Found</h2>
+      <p>Events tailored just for you</p>
+    </div>
+
+    <div
+      class="recommendation-card"
+      *ngFor="let rec of recommendations"
+    >
+      <!-- Match Score Badge -->
+      <div class="match-score-badge" [style.background-color]="getScoreColor(rec.score)">
+        <i class="pi pi-star"></i>
+        <span>{{ getScoreText(rec.score) }}</span>
+      </div>
+
+      <div class="event-header">
+        <div class="event-date">
+          <i class="pi pi-calendar"></i>
+          <span>{{ formatDate(rec.eventDate) }}</span>
+        </div>
+        <div class="event-time">
+          <i class="pi pi-clock"></i>
+          <span>{{ rec.eventTime }}</span>
+        </div>
+      </div>
+
+      <div class="event-content">
+        <h3 class="event-title">Volunteer Opportunity</h3>
+        <p class="event-description">{{ rec.eventDes }}</p>
+
+        <div class="event-details">
+          <div class="detail-item">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ rec.address }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="pi pi-user"></i>
+            <span>Organized by {{ rec.organizerName }}</span>
+          </div>
+          <div class="detail-item">
+            <i class="pi pi-phone"></i>
+            <span>{{ rec.contact }}</span>
+          </div>
+        </div>
+
+        <!-- Required Skills Section -->
+        <div
+          class="required-skills"
+          *ngIf="rec.requiredSkills && rec.requiredSkills.length > 0"
+        >
+          <div class="skills-header">
+            <i class="pi pi-cog"></i>
+            <span class="skills-title">Required Skills</span>
+          </div>
+          <div class="skills-container">
+            <span
+              class="skill-tag"
+              *ngFor="let skill of rec.requiredSkills; let i = index"
+              [title]="skill"
+              [class.more-skills]="i >= 6"
+            >
+              <span *ngIf="i < 6">{{ skill }}</span>
+              <span
+                *ngIf="i === 6 && rec.requiredSkills.length > 6"
+                class="more-count"
+              >
+                +{{ rec.requiredSkills.length - 6 }} more
+              </span>
+            </span>
+          </div>
+        </div>
+
+        <!-- No Skills Required -->
+        <div class="no-skills" *ngIf="!rec.requiredSkills || rec.requiredSkills.length === 0">
+          <div class="no-skills-message">
+            <i class="pi pi-heart"></i>
+            <span>No specific skills required - Everyone welcome!</span>
+          </div>
+        </div>
+
+        <div class="volunteer-info">
+          <div class="volunteer-count">
+            <span class="joined">{{ rec.noOfVolJoined }}</span>
+            <span class="separator">/</span>
+            <span class="total">{{ rec.totalVol }}</span>
+            <span class="label">volunteers</span>
+          </div>
+          <div
+            class="volunteer-status"
+            [ngClass]="{ full: isEventFull(rec) }"
+          >
+            {{ getVolunteerStatus(rec) }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="event-actions">
+        <button
+          pButton
+          type="button"
+          [label]="
+            hasJoined(rec)
+              ? 'Already Joined'
+              : isEventFull(rec)
+              ? 'Event Full'
+              : 'Join Event'
+          "
+          icon="pi pi-user-plus"
+          class="join-button"
+          [disabled]="isEventFull(rec) || hasJoined(rec)"
+          (click)="joinEvent(rec)"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -28,7 +28,8 @@ import { EventJoinedComponent } from './pages/event-joined/event-joined.componen
 import { EventsOrganizedComponent } from './pages/events-organized/events-organized.component';
 import { ForgotPasswordComponent } from './components/volunteering/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/volunteering/auth/reset-password/reset-password.component';
-
+import { SmartRecommendationsComponent } from './components/volunteering/UserDashboard/smart-recommendations/smart-recommendations.component';
+import { RecommendationService } from './components/volunteering/services/recommendation.service';
 
 
 
@@ -44,7 +45,8 @@ import { ResetPasswordComponent } from './components/volunteering/auth/reset-pas
     EventJoinedComponent,
     EventsOrganizedComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    SmartRecommendationsComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { ResetPasswordComponent } from './components/volunteering/auth/reset-pas
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    EventService
+    EventService,
+    RecommendationService
   ],
   bootstrap: [AppComponent]
 })
