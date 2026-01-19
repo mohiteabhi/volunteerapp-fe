@@ -1,18 +1,23 @@
-<p class="disclaimer">
-  You can only exit an event up to 48 hours before its date.
-</p>
 <div class="event-joined-container">
   <div class="header-section">
     <div class="header-content">
-      <h1 class="page-title">
-        <i class="pi pi-calendar-check"></i>
-        Events You've Joined
-      </h1>
+      <div class="header-left">
+        <h1 class="page-title">
+          <div class="title-icon">
+            <i class="pi pi-calendar-check"></i>
+          </div>
+          <span>Events You've Joined</span>
+        </h1>
+        <p class="disclaimer">
+          <i class="pi pi-info-circle"></i>
+          You can only exit an event up to 48 hours before its date.
+        </p>
+      </div>
       <button 
         (click)="returnToDashboard()" 
         class="return-btn">
         <i class="pi pi-arrow-left"></i>
-        Return to Dashboard
+        <span>Return to Dashboard</span>
       </button>
     </div>
   </div>
@@ -21,22 +26,31 @@
     <div class="events-card">
       <div class="card-header">
         <h3>Your Active Events</h3>
-        <span class="event-count">{{ joinedEvents.length }} Events</span>
+        <span class="event-count">
+          <i class="pi pi-calendar"></i>
+          {{ joinedEvents.length }} Events
+        </span>
       </div>
 
       <div class="events-container" *ngIf="joinedEvents.length > 0; else noEvents">
         <div class="event-item" *ngFor="let join of joinedEvents; let i = index">
+          <div class="event-number">{{ i + 1 }}</div>
           <div class="event-content">
             <div class="event-main">
               <div class="event-header">
                 <h4 class="event-title">{{ join.event.eventDes }}</h4>
-                <div class="event-badge">Event #{{ i + 1 }}</div>
+                <div class="event-badge">
+                  <i class="pi pi-check-circle"></i>
+                  Joined
+                </div>
               </div>
               
               <div class="event-details">
                 <div class="detail-row">
                   <div class="detail-item">
-                    <i class="pi pi-map-marker"></i>
+                    <div class="detail-icon">
+                      <i class="pi pi-map-marker"></i>
+                    </div>
                     <div class="detail-content">
                       <span class="detail-label">Location</span>
                       <span class="detail-value">{{ join.event.address }}, {{ join.event.cityName }}</span>
@@ -44,7 +58,9 @@
                   </div>
                   
                   <div class="detail-item">
-                    <i class="pi pi-calendar"></i>
+                    <div class="detail-icon">
+                      <i class="pi pi-calendar"></i>
+                    </div>
                     <div class="detail-content">
                       <span class="detail-label">Date & Time</span>
                       <span class="detail-value">{{ join.event.eventDate }} at {{ join.event.eventTime }}</span>
@@ -54,7 +70,9 @@
 
                 <div class="detail-row">
                   <div class="detail-item">
-                    <i class="pi pi-user"></i>
+                    <div class="detail-icon">
+                      <i class="pi pi-user"></i>
+                    </div>
                     <div class="detail-content">
                       <span class="detail-label">Organizer</span>
                       <span class="detail-value">{{ join.event.organizerName }}</span>
@@ -62,7 +80,9 @@
                   </div>
                   
                   <div class="detail-item">
-                    <i class="pi pi-phone"></i>
+                    <div class="detail-icon">
+                      <i class="pi pi-phone"></i>
+                    </div>
                     <div class="detail-content">
                       <span class="detail-label">Contact</span>
                       <span class="detail-value">{{ join.event.contact }}</span>
@@ -79,8 +99,12 @@
                 (click)="exitEvent(join.id)"
                 [title]="'Exit from ' + join.event.eventDes">
                 <i class="pi pi-sign-out"></i>
-                Exit Event
+                <span>Exit Event</span>
               </button>
+              <div *ngIf="!allowExit(join)" class="exit-disabled">
+                <i class="pi pi-lock"></i>
+                <span>Exit Locked</span>
+              </div>
             </div>
           </div>
         </div>
@@ -89,7 +113,15 @@
       <ng-template #noEvents>
         <div class="no-events">
           <div class="no-events-icon">
-            <i class="pi pi-calendar-times"></i>
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="60" cy="60" r="50" fill="#F3F4F6"/>
+              <rect x="30" y="40" width="60" height="50" rx="8" fill="#E5E7EB"/>
+              <rect x="35" y="50" width="50" height="4" rx="2" fill="#D1D5DB"/>
+              <rect x="35" y="60" width="35" height="4" rx="2" fill="#D1D5DB"/>
+              <rect x="35" y="70" width="40" height="4" rx="2" fill="#D1D5DB"/>
+              <circle cx="75" cy="75" r="20" fill="#8B5CF6" opacity="0.2"/>
+              <path d="M75 65 L75 75 L82 75" stroke="#8B5CF6" stroke-width="3" stroke-linecap="round"/>
+            </svg>
           </div>
           <h3>No Events Joined Yet</h3>
           <p>You haven't joined any events. Explore available events and start making a difference!</p>
@@ -97,7 +129,7 @@
             class="explore-btn"
             (click)="returnToDashboard()">
             <i class="pi pi-search"></i>
-            Find Events to Join
+            <span>Find Events to Join</span>
           </button>
         </div>
       </ng-template>

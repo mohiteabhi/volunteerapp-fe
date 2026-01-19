@@ -3,18 +3,23 @@
   <div class="sidebar" [class.sidebar-open]="sidebarOpen">
     <div class="sidebar-header">
       <div class="logo">
-        <i class="pi pi-users"></i>
-        <span>VolunteerHub</span>
+        <!-- <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 4C12.5 4 9.5 6.5 9.5 9.5C9.5 12.5 12.5 15 16 15C19.5 15 22.5 12.5 22.5 9.5C22.5 6.5 19.5 4 16 4Z" fill="#FF9A56"/>
+          <path d="M23 18C20.5 18 18.5 19.5 18.5 21.5V28H28V21.5C28 19.5 26 18 23 18Z" fill="#8B5CF6"/>
+          <path d="M9 18C6.5 18 4.5 19.5 4.5 21.5V28H14V21.5C14 19.5 12 18 9 18Z" fill="#8B5CF6"/>
+        </svg> -->
+        <img src="assets/logo1.png" alt="Swayamsevak Logo" class="swk-logo" />
+        <span>Swayamsevak</span>
       </div>
       <button class="close-btn" (click)="toggleSidebar()">
         <i class="pi pi-times"></i>
       </button>
     </div>
-    
+
     <nav class="sidebar-nav">
       <ul class="nav-list">
         <li class="nav-item">
-          <a href="#" class="nav-link active" (click)="navigateToHome()">
+          <a class="nav-link active" (click)="navigateToHome()">
             <i class="pi pi-home"></i>
             <span>Home</span>
           </a>
@@ -39,7 +44,7 @@
         </li>
       </ul>
     </nav>
-    
+
     <div class="sidebar-footer">
       <button class="logout-btn" (click)="logout()">
         <i class="pi pi-sign-out"></i>
@@ -55,9 +60,12 @@
   <div class="main-content" [class.content-shifted]="sidebarOpen">
     <!-- Header with Hamburger -->
     <div class="top-header">
-      <button class="hamburger-btn" (click)="toggleSidebar()">
-        <i class="pi pi-bars"></i>
-      </button>
+      <div class="top-left">
+        <button class="hamburger-btn" (click)="toggleSidebar()">
+          <i class="pi pi-bars"></i>
+        </button>
+        <img src="assets/logo1.png" alt="Swayamsevak Logo" class="topbar-logo" />
+      </div>
       <div class="header-user">
         <span class="user-greeting">Hello, {{ userName }}!</span>
         <div class="user-avatar">
@@ -71,13 +79,20 @@
       <!-- Welcome Section -->
       <div class="welcome-section">
         <div class="welcome-content">
-          <h1 class="welcome-title">Welcome back, {{ userName }}!</h1>
+          <h1 class="welcome-title">Welcome, {{ userName }}!</h1>
           <p class="welcome-subtitle">
-            Ready to make a difference? Join meaningful events in your community or organize your own social impact initiative.
+            Ready to make a difference? Join meaningful events in your community or organize your own social impact
+            initiative.
           </p>
         </div>
         <div class="hero-illustration">
-          <i class="pi pi-users hero-icon"></i>
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="35" r="18" fill="#FF9A56" opacity="0.2" />
+            <circle cx="60" cy="35" r="12" fill="#FF9A56" />
+            <path d="M30 85C30 68 42 60 60 60C78 60 90 68 90 85V95H30V85Z" fill="#8B5CF6" opacity="0.8" />
+            <circle cx="35" cy="50" r="8" fill="#FF9A56" opacity="0.6" />
+            <circle cx="85" cy="50" r="8" fill="#FF9A56" opacity="0.6" />
+          </svg>
         </div>
       </div>
 
@@ -91,38 +106,27 @@
         <div class="action-cards">
           <!-- Search Events Card -->
           <div class="action-card search-card">
-            <div class="card-header">
+            <div class="card-icon-wrapper">
               <i class="pi pi-search card-icon"></i>
-              <h3>Find Events to Join</h3>
             </div>
+            <h3 class="card-title">Find Events to Join</h3>
             <p class="card-description">
-              Discover volunteer opportunities and social work events happening in your area. 
+              Discover volunteer opportunities and social work events happening in your area.
               Connect with like-minded people and contribute to causes you care about.
             </p>
-            
+
             <div class="search-container">
-              <div class="p-inputgroup">
-                <input 
-                  type="text" 
-                  pInputText 
-                  placeholder="Search events by location, cause, or keyword..." 
-                  [(ngModel)]="searchQuery"
-                  (keypress)="onKeyPress($event)"
-                  class="search-input"
-                />
-                <button 
-                  pButton 
-                  type="button" 
-                  icon="pi pi-search" 
-                  class="search-button"
-                  (click)="onSearchEvents()"
-                  [disabled]="!searchQuery.trim()"
-                ></button>
+              <div class="search-input-wrapper">
+                <input type="text" placeholder="Search events by location, cause, or keyword..."
+                  [(ngModel)]="searchQuery" (keypress)="onKeyPress($event)" class="search-input" />
+                <button class="search-button" (click)="onSearchEvents()" [disabled]="!searchQuery.trim()">
+                  <i class="pi pi-search"></i>
+                </button>
               </div>
             </div>
 
             <div class="popular-searches">
-              <span class="popular-label">Popular searches:</span>
+              <span class="popular-label">Popular:</span>
               <div class="search-tags">
                 <span class="search-tag" (click)="searchQuery = 'education'; onSearchEvents()">Education</span>
                 <span class="search-tag" (click)="searchQuery = 'environment'; onSearchEvents()">Environment</span>
@@ -134,15 +138,15 @@
 
           <!-- Organize Event Card -->
           <div class="action-card organize-card">
-            <div class="card-header">
+            <div class="card-icon-wrapper">
               <i class="pi pi-plus-circle card-icon"></i>
-              <h3>Organize an Event</h3>
             </div>
+            <h3 class="card-title">Organize an Event</h3>
             <p class="card-description">
-              Have an idea for a social impact event? Create and manage your own volunteer opportunity. 
+              Have an idea for a social impact event? Create and manage your own volunteer opportunity.
               Bring together passionate individuals to make a real difference.
             </p>
-            
+
             <div class="organize-features">
               <div class="feature-item">
                 <i class="pi pi-check-circle"></i>
@@ -158,62 +162,65 @@
               </div>
             </div>
 
-            <button 
-              pButton 
-              type="button" 
-              label="Start Organizing" 
-              icon="pi pi-arrow-right"
-              class="organize-button"
-              (click)="onOrganizeEvent()"
-            ></button>
+            <button class="organize-button" (click)="onOrganizeEvent()">
+              <span>Start Organizing</span>
+              <i class="pi pi-arrow-right"></i>
+            </button>
           </div>
         </div>
       </div>
 
+      <!-- Smart Recommendations Section -->
       <div class="smart-recommendations-section">
-  <div class="section-header">
-    <h2>Smart Recommendations</h2>
-    <p>AI-powered event suggestions based on your skills and location</p>
-  </div>
-  
-  <div class="smart-card">
-    <div class="smart-card-content">
-      <div class="ai-icon">
-        <i class="pi pi-sparkles"></i>
+        <div class="section-header">
+          <h2>Smart Recommendations</h2>
+          <p>AI-powered event suggestions based on your skills and location</p>
+        </div>
+
+        <div class="smart-card">
+          <div class="smart-card-content">
+            <div class="ai-icon">
+              <i class="pi pi-sparkles"></i>
+            </div>
+            <div class="smart-info">
+              <h3>Get Personalized Event Suggestions</h3>
+              <p>Our AI analyzes your skills, location, and preferences to find the perfect volunteer opportunities for
+                you.</p>
+              <ul class="smart-features">
+                <li><i class="pi pi-check"></i> Skill-based matching</li>
+                <li><i class="pi pi-check"></i> Location preferences</li>
+                <li><i class="pi pi-check"></i> Smart scoring system</li>
+              </ul>
+            </div>
+          </div>
+          <button class="smart-button" (click)="onGetSmartRecommendations()">
+            <i class="pi pi-bolt"></i>
+            <span>Get Smart Recommendations</span>
+          </button>
+        </div>
       </div>
-      <div class="smart-info">
-        <h3>Get Personalized Event Suggestions</h3>
-        <p>Our AI analyzes your skills, location, and preferences to find the perfect volunteer opportunities for you.</p>
-        <ul class="smart-features">
-          <li><i class="pi pi-check"></i> Skill-based matching</li>
-          <li><i class="pi pi-check"></i> Location preferences</li>
-          <li><i class="pi pi-check"></i> Smart scoring system</li>
-        </ul>
-      </div>
-    </div>
-    <button 
-      pButton 
-      type="button" 
-      label="Get Smart Recommendations" 
-      icon="pi pi-magic-wand"
-      class="smart-button"
-      (click)="onGetSmartRecommendations()"
-    ></button>
-  </div>
-</div>
 
       <!-- Stats Section -->
       <div class="stats-section">
         <div class="stats-container">
           <div class="stat-item">
+            <div class="stat-icon">
+              <i class="pi pi-users"></i>
+            </div>
             <div class="stat-number">2,500+</div>
             <div class="stat-label">Active Volunteers</div>
           </div>
           <div class="stat-item">
+            <div class="stat-icon">
+              <i class="pi pi-calendar"></i>
+            </div>
             <div class="stat-number">450+</div>
             <div class="stat-label">Events Organized</div>
           </div>
           <div class="stat-item">
+            <div class="stat-icon">
+              <i class="pi pi-heart"></i>
+            </div>
             <div class="stat-number">15,000+</div>
             <div class="stat-label">Lives Impacted</div>
           </div>
