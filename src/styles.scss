@@ -1,48 +1,179 @@
-/* You can add global styles to this file, and also import other style files */
-/* Global Styles */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* ===== SWAYAMSEVAK GLOBAL DESIGN SYSTEM ===== */
 
-* {
+/* Design Tokens */
+:root {
+  --primary: #FF6B35;
+  --primary-light: #FF8C5A;
+  --primary-dark: #E5521A;
+  --accent: #6C47FF;
+  --accent-light: #8B6DFF;
+  --accent-dark: #4F2FE8;
+
+  --bg-dark: #0D1117;
+  --bg-surface: #161B22;
+  --bg-card: #21262D;
+  --bg-card-hover: #2D333B;
+  --bg-input: #0D1117;
+
+  --text-primary: #F0F6FC;
+  --text-secondary: #8B949E;
+  --text-muted: #6E7681;
+
+  --border: rgba(240, 246, 252, 0.08);
+  --border-accent: rgba(108, 71, 255, 0.3);
+  --border-primary: rgba(255, 107, 53, 0.3);
+
+  --success: #3FB950;
+  --success-bg: rgba(63, 185, 80, 0.12);
+  --danger: #F85149;
+  --danger-bg: rgba(248, 81, 73, 0.12);
+  --warning: #D29922;
+  --warning-bg: rgba(210, 153, 34, 0.12);
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow-primary: 0 0 20px rgba(255, 107, 53, 0.25);
+  --shadow-glow-accent: 0 0 20px rgba(108, 71, 255, 0.25);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-body: 'Inter', 'Plus Jakarta Sans', sans-serif;
+
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-md: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Inter', sans-serif;
-  line-height: 1.6;
-  color: #374151;
-  background-color: #f8fafc;
-}
-
 html, body {
   height: 100%;
-}
-
-/* PrimeNG Button Overrides */
-.p-button {
-  font-family: 'Inter', sans-serif !important;
-}
-
-/* Smooth scrolling */
-html {
   scroll-behavior: smooth;
 }
 
-/* Custom scrollbar */
+body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: var(--bg-surface);
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+  background: linear-gradient(135deg, var(--accent), var(--primary));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--accent-light), var(--primary-light));
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+/* ===== SHARED ANIMATIONS ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(5deg); }
+  66% { transform: translateY(-6px) rotate(-3deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(10px) rotate(-4deg); }
+  66% { transform: translateY(5px) rotate(3deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes orb-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -20px) scale(1.05); }
+  50% { transform: translate(-20px, 30px) scale(0.95); }
+  75% { transform: translate(20px, 15px) scale(1.02); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== UTILITY: Gradient Text ===== */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== PrimeNG Overrides for dark theme ===== */
+.p-button {
+  font-family: var(--font-body) !important;
+}
+
+.p-inputtext {
+  font-family: var(--font-body) !important;
+  background: var(--bg-input) !important;
+  border-color: var(--border) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.p-inputtext:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(108, 71, 255, 0.15) !important;
+}
+
+.p-chip {
+  background: rgba(108, 71, 255, 0.15) !important;
+  color: var(--accent-light) !important;
+  border: 1px solid rgba(108, 71, 255, 0.3) !important;
+}
+
+.p-chip .p-chip-remove-icon {
+  color: var(--accent-light) !important;
 }

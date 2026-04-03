@@ -1,57 +1,143 @@
-<div class="volunteering-container">
-  <!-- Header Section -->
-  <header class="header-section">
-    <div class="header-content">
-      <!-- Logo -->
-      <div class="logo-section">
-        <div class="logo-icon">🤝</div>
-        <div class="logo-text-container">
-          <h1 class="logo-text">SWAYAMSEVAK</h1>
-          <p class="logo-subtitle">VOLUNTEER PLATFORM</p>
+<div class="landing-container">
+  <!-- Animated Mesh Background -->
+  <div class="bg-mesh">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+    <div class="grid-lines"></div>
+  </div>
+
+  <!-- Glassmorphic Navbar -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="brand-logo">
+          <img src="assets/logo1.png" alt="Swayamsevak" class="brand-logo-img" />
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">SWAYAMSEVAK</span>
+          <span class="brand-tagline">Volunteer Platform</span>
         </div>
       </div>
-      
-      <!-- Navigation -->
-      <nav class="navigation">
-        <ul class="nav-menu">
-          <li class="nav-item">
-            <a href="#" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">About us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" (click)="login()">Log In</a>
-          </li>
-        </ul>
-      </nav>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link">Home</a></li>
+        <li><a href="#" class="nav-link">About</a></li>
+        <li><a class="nav-link nav-cta" (click)="login()">
+          Sign In
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a></li>
+      </ul>
     </div>
-  </header>
+  </nav>
 
-  <!-- Main Content Section -->
-  <main class="main-section">
-    <div class="content-wrapper">
-      <!-- Left Content -->
-      <div class="left-content">
-        <h2 class="main-heading">Why do we use it?</h2>
-        <p class="main-description">
-          We use an app for volunteers to communicate with event organizers to streamline communication, coordinate tasks, manage schedules, and ensure efficient event execution.
+  <!-- Hero Section -->
+  <main class="hero-section">
+    <div class="hero-inner">
+      <!-- Left: Text Content -->
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>2,500+ Active Volunteers</span>
+        </div>
+
+        <h1 class="hero-title">
+          Connect. Serve.
+          <span class="title-highlight">Transform Lives.</span>
+        </h1>
+
+        <p class="hero-description">
+          Swayamsevak bridges passionate volunteers with meaningful opportunities. Join events that matter, organize community initiatives, and be the change you wish to see.
         </p>
-        <button class="get-started-btn" (click)="getStarted()">
-          Get started
-        </button>
-      </div>
 
-      <!-- Right Illustration -->
-      <div class="right-illustration">
-        <div class="illustration-container">
-          <!-- Heart Shape with Volunteering Text -->
-          <div class="heart-container">
-            <div class="heart-shape">
-              <span class="volunteering-text">VOLUNTEERING</span>
-            </div>
+        <div class="hero-cta">
+          <button class="btn-primary" (click)="getStarted()">
+            <span>Get Started Free</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn-ghost" (click)="login()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
+            <span>Watch Demo</span>
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">2,500+</div>
+            <div class="stat-lbl">Volunteers</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num">450+</div>
+            <div class="stat-lbl">Events</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num">15K+</div>
+            <div class="stat-lbl">Lives Impacted</div>
           </div>
         </div>
+      </div>
+
+      <!-- Right: Visual -->
+      <div class="hero-visual">
+        <div class="visual-image-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=700&q=80&auto=format&fit=crop"
+            alt="Volunteers working together"
+            class="hero-image"
+          />
+          <div class="image-overlay"></div>
+        </div>
+
+        <!-- Floating Cards -->
+        <div class="float-card float-card-1">
+          <div class="float-icon">🤝</div>
+          <div class="float-info">
+            <div class="float-title">Community First</div>
+            <div class="float-sub">Join 450+ events</div>
+          </div>
+        </div>
+
+        <div class="float-card float-card-2">
+          <div class="float-icon">✨</div>
+          <div class="float-info">
+            <div class="float-title">AI Recommendations</div>
+            <div class="float-sub">Skill-based matching</div>
+          </div>
+        </div>
+
+        <div class="float-card float-card-3">
+          <div class="float-icon">🌱</div>
+          <div class="float-info">
+            <div class="float-title">Real Impact</div>
+            <div class="float-sub">15,000+ lives changed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Pills -->
+    <div class="feature-pills">
+      <div class="pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Volunteer Matching
+      </div>
+      <div class="pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Event Management
+      </div>
+      <div class="pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+        Smart AI Engine
+      </div>
+      <div class="pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        City-Based Events
+      </div>
+      <div class="pill">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 16"/></svg>
+        Real-time Coordination
       </div>
     </div>
   </main>
