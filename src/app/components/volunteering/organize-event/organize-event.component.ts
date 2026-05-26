@@ -20,8 +20,9 @@ export class OrganizeEventComponent {
   submitSuccess = false;
   userId: any;
   isUserLoaded = false;
+  minDate: Date = new Date();
 
-    // Skills related properties
+  // Skills related properties
   requiredSkills: string[] = [];
   currentSkill: string = '';
   suggestedSkills: string[] = [
@@ -43,7 +44,7 @@ export class OrganizeEventComponent {
     this.eventForm = this.createForm();
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.userId = this.authService.getUserId();
     this.userService.getUserById(this.userId).subscribe({
       next: (user) => {
@@ -58,7 +59,7 @@ export class OrganizeEventComponent {
         this.isUserLoaded = true; // Still allow form submission
       }
     });
-  
+
   }
 
   private createForm(): FormGroup {
@@ -78,15 +79,15 @@ export class OrganizeEventComponent {
     });
   }
 
-    skillsValidator(control: any) {
+  skillsValidator(control: any) {
     return this.requiredSkills.length > 0 ? null : { required: true };
   }
 
-    // Skills management methods
+  // Skills management methods
   addSkill(event: any): void {
     event.preventDefault();
     const skillToAdd = this.currentSkill.trim();
-    
+
     if (skillToAdd && !this.requiredSkills.includes(skillToAdd) && this.requiredSkills.length < 10) {
       this.requiredSkills.push(skillToAdd);
       this.updateSkillsInForm();
@@ -112,7 +113,7 @@ export class OrganizeEventComponent {
   }
 
   get filteredSuggestedSkills(): string[] {
-    return this.suggestedSkills.filter(skill => 
+    return this.suggestedSkills.filter(skill =>
       !this.requiredSkills.includes(skill)
     ).slice(0, 8); // Show only first 8 suggestions
   }
@@ -135,7 +136,7 @@ export class OrganizeEventComponent {
       return;
     }
 
-       if (this.requiredSkills.length === 0) {
+    if (this.requiredSkills.length === 0) {
       this.eventForm.get('requiredSkills')?.setErrors({ required: true });
       this.eventForm.get('requiredSkills')?.markAsTouched();
       return;
@@ -154,8 +155,13 @@ export class OrganizeEventComponent {
     const address = (formValue.address || '').trim();
     const organizerName = (formValue.organizerName || '').trim();
     const contact = (formValue.contact || '').trim();
-    const eventDate = formValue.eventDate; // e.g. "2025-06-10"
-    const eventTime = formValue.eventTime ? formValue.eventTime + ':00' : '';
+    const eventDate = formValue.eventDate
+      ? this.formatDate(formValue.eventDate)
+      : '';
+
+    const eventTime = formValue.eventTime
+      ? this.formatTime(formValue.eventTime)
+      : '';
     const userId = this.userId;
 
     // Create the request payload
@@ -229,7 +235,7 @@ export class OrganizeEventComponent {
 
   private getFieldLabel(fieldName: string): string {
     const labels: { [key: string]: string } = {
-      city_name: 'City name',
+      cityName: 'City name',
       eventDes: 'Event description',
       totalVol: 'Total volunteers',
       eventDate: 'Event date',
@@ -244,5 +250,21 @@ export class OrganizeEventComponent {
   getTodayDate(): string {
     const today = new Date();
     return today.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
+  }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
+  formatTime(date: Date): string {
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = '00';
+
+    return `${hours}:${minutes}:${seconds}`;
   }
 }

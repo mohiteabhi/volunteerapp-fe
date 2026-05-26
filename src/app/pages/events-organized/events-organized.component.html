@@ -90,10 +90,15 @@
                 <input
                   *ngIf="evt.isEditing; else locationDisplay"
                   [(ngModel)]="evt.cityName"
+                  (ngModelChange)="validateEvent(evt)"
+                  [class.error]="evt.errors?.['cityName']"
                   pInputText
                   class="detail-input"
                   placeholder="Enter city name"
                 />
+                <div class="error-text" *ngIf="evt.isEditing && evt.errors?.['cityName']">
+                  {{ evt.errors?.['cityName'] }}
+                </div>
                 <ng-template #locationDisplay>
                   <span class="detail-value">{{
                     evt.cityName || "Not specified"
@@ -113,15 +118,25 @@
                   <input
                     type="date"
                     [(ngModel)]="evt.eventDate"
+                    (ngModelChange)="validateEvent(evt)"
+                    [class.error]="evt.errors?.['eventDate']"
                     pInputText
                     class="detail-input date-input"
                   />
                   <input
                     type="time"
                     [(ngModel)]="evt.eventTime"
+                    (ngModelChange)="validateEvent(evt)"
+                    [class.error]="evt.errors?.['eventTime']"
                     pInputText
                     class="detail-input time-input"
                   />
+                </div>
+                <div class="error-text" *ngIf="evt.isEditing && evt.errors?.['eventDate']">
+                  {{ evt.errors?.['eventDate'] }}
+                </div>
+                <div class="error-text" *ngIf="evt.isEditing && !evt.errors?.['eventDate'] && evt.errors?.['eventTime']">
+                  {{ evt.errors?.['eventTime'] }}
                 </div>
                 <ng-template #datetimeDisplay>
                   <span class="detail-value">{{
@@ -160,10 +175,15 @@
                 <input
                   *ngIf="evt.isEditing; else contactDisplay"
                   [(ngModel)]="evt.contact"
+                  (ngModelChange)="validateEvent(evt)"
+                  [class.error]="evt.errors?.['contact']"
                   pInputText
                   class="detail-input"
                   placeholder="Contact number"
                 />
+                <div class="error-text" *ngIf="evt.isEditing && evt.errors?.['contact']">
+                  {{ evt.errors?.['contact'] }}
+                </div>
                 <ng-template #contactDisplay>
                   <span class="detail-value">{{
                     evt.contact || "Not provided"
@@ -185,10 +205,15 @@
                 <input
                   *ngIf="evt.isEditing; else addressDisplay"
                   [(ngModel)]="evt.address"
+                  (ngModelChange)="validateEvent(evt)"
+                  [class.error]="evt.errors?.['address']"
                   pInputText
                   class="detail-input"
                   placeholder="Full address"
                 />
+                <div class="error-text" *ngIf="evt.isEditing && evt.errors?.['address']">
+                  {{ evt.errors?.['address'] }}
+                </div>
                 <ng-template #addressDisplay>
                   <span class="detail-value">{{ evt.address }}</span>
                 </ng-template>
@@ -208,12 +233,17 @@
                 <textarea
                   *ngIf="evt.isEditing; else descriptionDisplay"
                   [(ngModel)]="evt.eventDes"
+                  (ngModelChange)="validateEvent(evt)"
+                  [class.error]="evt.errors?.['eventDes']"
                   pInputTextarea
                   rows="3"
                   class="detail-textarea"
                   placeholder="Event description"
                 >
                 </textarea>
+                <div class="error-text" *ngIf="evt.isEditing && evt.errors?.['eventDes']">
+                  {{ evt.errors?.['eventDes'] }}
+                </div>
                 <ng-template #descriptionDisplay>
                   <span class="detail-value description-text">{{
                     evt.eventDes
@@ -222,84 +252,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <div
-            class="details-row full-width"
-            *ngIf="
-              evt.isEditing ||
-              (evt.requiredSkills && evt.requiredSkills.length > 0)
-            "
-          >
-            <div class="detail-item required-skills">
-              <i class="pi pi-star detail-icon"></i>
-              <div class="detail-content">
-                <label class="detail-label">Required Skills</label>
-                <div
-                  *ngIf="evt.isEditing; else skillsDisplay"
-                  class="skills-editing"
-                >
-                  <div class="skills-input-container">
-                    <input
-                      type="text"
-                      pInputText
-                      class="detail-input skill-input"
-                      placeholder="Add a skill and press Enter"
-                      (keyup)="$event.stopPropagation()"
-                    />
-                    <button
-                      pButton
-                      type="button"
-                      icon="pi pi-plus"
-                      class="p-button-text p-button-rounded add-skill-btn"
-                      pTooltip="Add Skill"
-                    ></button>
-                  </div>
-                  <div
-                    class="skills-tags"
-                    *ngIf="evt.requiredSkills && evt.requiredSkills.length > 0"
-                  >
-                    <span
-                      *ngFor="
-                        let skill of evt.requiredSkills;
-                        let skillIndex = index
-                      "
-                      class="skill-tag editable"
-                    >
-                      {{ skill }}
-                      <button
-                        type="button"
-                        class="remove-skill-btn"
-                        pTooltip="Remove Skill"
-                      >
-                        <i class="pi pi-times"></i>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-                <ng-template #skillsDisplay>
-                  <div
-                    class="skills-tags"
-                    *ngIf="
-                      evt.requiredSkills && evt.requiredSkills.length > 0;
-                      else noSkillsDisplay
-                    "
-                  >
-                    <span
-                      *ngFor="let skill of evt.requiredSkills"
-                      class="skill-tag"
-                    >
-                      {{ skill }}
-                    </span>
-                  </div>
-                  <ng-template #noSkillsDisplay>
-                    <span class="detail-value"
-                      >No specific skills required</span
-                    >
-                  </ng-template>
-                </ng-template>
-              </div>
-            </div>
-          </div> -->
 
           <div
             class="details-row full-width"
@@ -312,12 +264,17 @@
                 <textarea
                   *ngIf="evt.isEditing; else skillsDisplay"
                   [(ngModel)]="evt.skillsString"
+                  (ngModelChange)="validateEvent(evt)"
+                  [class.error]="evt.errors?.['skillsString']"
                   pInputTextarea
                   rows="2"
                   class="detail-textarea"
                   placeholder="Enter skills separated by commas (e.g., Communication, Leadership, First Aid)"
                 >
                 </textarea>
+                <div class="error-text" *ngIf="evt.isEditing && evt.errors?.['skillsString']">
+                  {{ evt.errors?.['skillsString'] }}
+                </div>
                 <ng-template #skillsDisplay>
                   <div
                     class="skills-display"
@@ -355,10 +312,15 @@
                   *ngIf="evt.isEditing; else totalVolDisplay"
                   type="number"
                   [(ngModel)]="evt.totalVol"
+                  (ngModelChange)="validateEvent(evt)"
+                  [class.error]="evt.errors?.['totalVol']"
                   pInputText
                   class="detail-input"
                   min="1"
                 />
+                <div class="error-text" *ngIf="evt.isEditing && evt.errors?.['totalVol']">
+                  {{ evt.errors?.['totalVol'] }}
+                </div>
                 <ng-template #totalVolDisplay>
                   <span class="detail-value">{{ evt.totalVol || 0 }}</span>
                 </ng-template>

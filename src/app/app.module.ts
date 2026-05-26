@@ -31,6 +31,8 @@ import { ResetPasswordComponent } from './components/volunteering/auth/reset-pas
 import { SmartRecommendationsComponent } from './components/volunteering/UserDashboard/smart-recommendations/smart-recommendations.component';
 import { RecommendationService } from './components/volunteering/services/recommendation.service';
 
+import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -62,7 +64,9 @@ import { RecommendationService } from './components/volunteering/services/recomm
     MenubarModule,
     CardModule,
     InputTextModule,
-    ChipModule
+    ChipModule,
+    CalendarModule,
+    InputNumberModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

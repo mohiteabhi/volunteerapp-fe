@@ -6,7 +6,9 @@
   font-family: var(--font-body);
   padding: 2rem;
 
-  @media (max-width: 768px) { padding: 1rem; }
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
 }
 
 .organize-content {
@@ -35,7 +37,9 @@
   transition: all var(--transition-fast);
   margin-bottom: 1.5rem;
 
-  i { font-size: 0.9rem; }
+  i {
+    font-size: 0.9rem;
+  }
 
   &:hover {
     border-color: rgba(240, 246, 252, 0.2);
@@ -55,7 +59,9 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 
-  @media (max-width: 768px) { font-size: 1.625rem; }
+  @media (max-width: 768px) {
+    font-size: 1.625rem;
+  }
 }
 
 .page-subtitle {
@@ -79,7 +85,10 @@
   font-weight: 600;
   font-size: 0.9rem;
 
-  i { font-size: 1.25rem; flex-shrink: 0; }
+  i {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
 }
 
 .error-message {
@@ -95,13 +104,24 @@
   font-weight: 600;
   font-size: 0.9rem;
 
-  i { font-size: 1.25rem; flex-shrink: 0; }
+  i {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
 }
 
 /* ===== EVENT FORM ===== */
-.event-form { display: flex; flex-direction: column; gap: 1.5rem; }
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-.form-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
 .form-section {
   background: var(--bg-card);
@@ -111,9 +131,13 @@
   box-shadow: var(--shadow-sm);
   transition: all var(--transition-fast);
 
-  &:hover { border-color: rgba(108, 71, 255, 0.15); }
+  &:hover {
+    border-color: rgba(108, 71, 255, 0.15);
+  }
 
-  @media (max-width: 768px) { padding: 1.5rem; }
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
 }
 
 .section-title {
@@ -143,7 +167,9 @@
   grid-template-columns: 1fr 1fr;
   gap: 1.25rem;
 
-  @media (max-width: 640px) { grid-template-columns: 1fr; }
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .form-group {
@@ -165,7 +191,8 @@
   }
 }
 
-.form-input, .form-textarea {
+.form-input,
+.form-textarea {
   background: var(--bg-input);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
@@ -177,7 +204,9 @@
   outline: none;
   width: 100%;
 
-  &::placeholder { color: var(--text-muted); }
+  &::placeholder {
+    color: var(--text-muted);
+  }
 
   &:focus {
     border-color: var(--accent);
@@ -212,7 +241,9 @@
   display: flex;
   gap: 0.625rem;
 
-  .skills-input { flex: 1; }
+  .skills-input {
+    flex: 1;
+  }
 }
 
 .add-skill-button {
@@ -235,14 +266,28 @@
     transform: scale(1.02);
     box-shadow: 0 4px 12px rgba(108, 71, 255, 0.3);
   }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  i { font-size: 0.875rem; }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  i {
+    font-size: 0.875rem;
+  }
 }
 
-.skills-display { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.875rem; }
+.skills-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.875rem;
+}
 
-.suggested-skills { margin-top: 0.875rem; }
+.suggested-skills {
+  margin-top: 0.875rem;
+}
+
 .suggested-label {
   font-size: 0.6875rem;
   color: var(--text-muted);
@@ -253,7 +298,11 @@
   margin-bottom: 0.5rem;
 }
 
-.suggested-skills-list { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+.suggested-skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
 
 .suggested-skill-button {
   display: flex;
@@ -270,7 +319,9 @@
   cursor: pointer;
   transition: all var(--transition-fast);
 
-  i { font-size: 0.625rem; }
+  i {
+    font-size: 0.625rem;
+  }
 
   &:hover {
     background: rgba(108, 71, 255, 0.15);
@@ -286,7 +337,10 @@
   font-size: 0.75rem;
   margin-top: 0.625rem;
 
-  i { color: var(--accent-light); font-size: 0.875rem; }
+  i {
+    color: var(--accent-light);
+    font-size: 0.875rem;
+  }
 }
 
 .loading-indicator {
@@ -303,7 +357,9 @@
   gap: 1rem;
   flex-wrap: wrap;
 
-  @media (max-width: 480px) { flex-direction: column; }
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 }
 
 .cancel-button {
@@ -324,9 +380,14 @@
     background: var(--bg-card);
   }
 
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-  @media (max-width: 480px) { width: 100%; }
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 }
 
 .submit-button {
@@ -345,14 +406,249 @@
   gap: 0.625rem;
   box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);
 
-  i { font-size: 1rem; }
+  i {
+    font-size: 1rem;
+  }
 
   &:not(:disabled):hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 28px rgba(255, 107, 53, 0.45);
   }
 
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-  @media (max-width: 480px) { width: 100%; justify-content: center; }
+  @media (max-width: 480px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ===== PRIME NG CALENDAR & DATEPICKER OVERRIDES ===== */
+::ng-deep .custom-calendar {
+  width: 100% !important;
+  display: inline-flex !important;
+  position: relative;
+}
+
+::ng-deep .custom-calendar .p-inputtext {
+  width: 100% !important;
+  height: 42px !important;
+  font-size: 0.875rem !important;
+  padding: 0.75rem 1rem !important;
+  background: var(--bg-input) !important;
+  border: 1px solid var(--border) !important;
+  border-right: none !important;
+  border-radius: var(--radius-md) 0 0 var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  font-family: var(--font-body) !important;
+  transition: all var(--transition-fast) !important;
+
+  &::placeholder {
+    color: var(--text-muted) !important;
+  }
+
+  &:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(108, 71, 255, 0.15) !important;
+  }
+}
+
+::ng-deep .custom-calendar .p-datepicker-trigger {
+  width: 42px !important;
+  height: 42px !important;
+  background: rgba(108, 71, 255, 0.1) !important;
+  border: 1px solid var(--border) !important;
+  border-left: none !important;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0 !important;
+  color: var(--accent-light) !important;
+  cursor: pointer;
+  transition: all var(--transition-fast) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  &:hover {
+    background: rgba(108, 71, 255, 0.2) !important;
+    color: var(--text-primary) !important;
+  }
+
+  .p-button-icon {
+    font-size: 0.95rem !important;
+  }
+}
+
+/* Datepicker & Timepicker Overlay */
+::ng-deep .p-datepicker {
+  background: var(--bg-surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  font-family: var(--font-body) !important;
+  padding: 1rem !important;
+  color: var(--text-primary) !important;
+  margin-top: 5px !important;
+  min-width: 280px !important;
+}
+
+::ng-deep .p-datepicker.p-datepicker-timeonly {
+  min-width: 180px !important;
+  padding: 0.5rem 1rem !important;
+}
+
+/* Datepicker Header styling */
+::ng-deep .p-datepicker-header {
+  background: transparent !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 0.5rem 0 1rem 0 !important;
+  color: var(--text-primary) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+::ng-deep .p-datepicker-title {
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  color: var(--text-primary) !important;
+}
+
+::ng-deep .p-datepicker-prev,
+::ng-deep .p-datepicker-next {
+  color: var(--text-secondary) !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  border-radius: var(--radius-sm) !important;
+  background: transparent !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all var(--transition-fast) !important;
+  cursor: pointer !important;
+
+  &:hover {
+    background: rgba(240, 246, 252, 0.05) !important;
+    color: var(--text-primary) !important;
+  }
+}
+
+/* Datepicker Table styling */
+::ng-deep .p-datepicker table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin-top: 0.75rem !important;
+}
+
+::ng-deep .p-datepicker table th {
+  padding: 0.5rem !important;
+  color: var(--text-muted) !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+::ng-deep .p-datepicker table td {
+  padding: 0.2rem !important;
+}
+
+::ng-deep .p-datepicker table td > span {
+  width: 2.25rem !important;
+  height: 2.25rem !important;
+  border-radius: var(--radius-md) !important;
+  // color: var(--text-primary) !important;
+  color: #0062c4 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 500 !important;
+  font-size: 0.85rem !important;
+  transition: all var(--transition-fast) !important;
+  cursor: pointer !important;
+
+  &:hover {
+    background: rgba(108, 71, 255, 0.15) !important;
+    color: var(--accent-light) !important;
+  }
+
+  &.p-highlight {
+    background: linear-gradient(135deg, var(--primary), var(--accent)) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 12px rgba(108, 71, 255, 0.3) !important;
+  }
+
+  &.p-disabled {
+    color: var(--text-muted) !important;
+    opacity: 0.3 !important;
+    background: transparent !important;
+    cursor: not-allowed !important;
+  }
+}
+
+::ng-deep .p-datepicker table td.p-datepicker-other-month > span {
+  color: var(--text-muted) !important;
+  opacity: 0.4 !important;
+}
+
+/* Timepicker styling */
+::ng-deep .p-timepicker {
+  background: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.75rem 0 !important;
+  color: var(--text-primary) !important;
+
+  button {
+    color: var(--text-secondary) !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    border-radius: var(--radius-sm) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    transition: all var(--transition-fast) !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+
+    &:hover {
+      background: rgba(240, 246, 252, 0.05) !important;
+      color: var(--text-primary) !important;
+    }
+
+    span {
+      font-size: 0.9rem !important;
+    }
+  }
+
+  .p-separator {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: var(--text-secondary) !important;
+    padding: 0 0.5rem !important;
+  }
+
+  .p-hour-picker,
+  .p-minute-picker,
+  .p-ampm-picker {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    
+    span {
+      font-size: 1.125rem !important;
+      font-weight: 700 !important;
+      color: var(--text-primary) !important;
+      padding: 0.25rem 0.5rem !important;
+    }
+  }
 }

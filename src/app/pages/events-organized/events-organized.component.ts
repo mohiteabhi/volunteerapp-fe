@@ -9,6 +9,7 @@ interface ExtendedEvent extends Event {
   isEditing?: boolean;
   originalData?: Partial<Event>;
   skillsString?: string;
+  errors?: { [key: string]: string };
 }
 
 @Component({
@@ -48,6 +49,7 @@ export class EventsOrganizedComponent {
           ...evt,
           isEditing: false,
           skillsString: evt.requiredSkills?.join(', ') || '',
+          errors: {},
         }));
         this.loading = false;
       },
@@ -57,6 +59,80 @@ export class EventsOrganizedComponent {
         this.loading = false;
       },
     });
+  }
+
+  validateEvent(evt: ExtendedEvent): boolean {
+    evt.errors = {};
+
+    // 1. City Name Validation
+    if (!evt.cityName) {
+      evt.errors['cityName'] = 'City name is required';
+    } else if (evt.cityName.trim().length < 2) {
+      evt.errors['cityName'] = 'City name must be at least 2 characters';
+    }
+
+    // 2. Event Description Validation
+    if (!evt.eventDes) {
+      evt.errors['eventDes'] = 'Event description is required';
+    } else if (evt.eventDes.trim().length < 10) {
+      evt.errors['eventDes'] = 'Event description must be at least 10 characters';
+    }
+
+    // 3. Total Volunteers Validation
+    if (evt.totalVol === null || evt.totalVol === undefined || String(evt.totalVol) === '') {
+      evt.errors['totalVol'] = 'Total volunteers is required';
+    } else {
+      const volNum = Number(evt.totalVol);
+      if (volNum < 1) {
+        evt.errors['totalVol'] = 'Total volunteers must be at least 1';
+      } else if (volNum > 1000) {
+        evt.errors['totalVol'] = 'Total volunteers cannot exceed 1000';
+      }
+    }
+
+    // 4. Event Date Validation
+    if (!evt.eventDate) {
+      evt.errors['eventDate'] = 'Event date is required';
+    } else {
+      const selectedDate = new Date(evt.eventDate);
+      selectedDate.setHours(0, 0, 0, 0);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate < today) {
+        evt.errors['eventDate'] = 'Event date cannot be in the past';
+      }
+    }
+
+    // 5. Event Time Validation
+    if (!evt.eventTime) {
+      evt.errors['eventTime'] = 'Event time is required';
+    }
+
+    // 6. Address Validation
+    if (!evt.address) {
+      evt.errors['address'] = 'Address is required';
+    } else if (evt.address.trim().length < 10) {
+      evt.errors['address'] = 'Address must be at least 10 characters';
+    }
+
+    // 7. Contact Validation
+    const contactStr = String(evt.contact || '').trim();
+    if (!contactStr) {
+      evt.errors['contact'] = 'Contact number is required';
+    } else if (!/^[0-9]{10}$/.test(contactStr)) {
+      evt.errors['contact'] = 'Please enter a valid 10-digit phone number';
+    }
+
+    // 8. Required Skills Validation
+    const skillsList = evt.skillsString
+      ?.split(',')
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0) || [];
+    if (skillsList.length === 0) {
+      evt.errors['skillsString'] = 'At least one required skill is required';
+    }
+
+    return Object.keys(evt.errors).length === 0;
   }
 
   toggleEdit(evt: ExtendedEvent): void {
@@ -83,6 +159,7 @@ export class EventsOrganizedComponent {
       };
       evt.isEditing = true;
       evt.skillsString = evt.requiredSkills?.join(', ') || '';
+      evt.errors = {};
     }
   }
 
@@ -94,9 +171,14 @@ export class EventsOrganizedComponent {
       evt.skillsString = evt.requiredSkills?.join(', ') || '';
     }
     evt.isEditing = false;
+    evt.errors = {};
   }
 
   saveEvent(evt: ExtendedEvent): void {
+    if (!this.validateEvent(evt)) {
+      return;
+    }
+
     evt.requiredSkills =
       evt.skillsString
         ?.split(',')
@@ -122,6 +204,7 @@ export class EventsOrganizedComponent {
         evt.skillsString = evt.requiredSkills.join(', ');
         evt.isEditing = false;
         evt.originalData = undefined;
+        evt.errors = {};
 
         // Show success message (you can implement toast notification here)
         console.log('Event updated successfully');
